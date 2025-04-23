@@ -1,0 +1,20 @@
+{
+  "gitSyncId": "6808fda53361a34d8231cac0_3de6aefc-81fa-48ce-bdae-185d9c48dfd3",
+  "id": "Home_homeFunctions",
+  "unpublishedCollection": {
+    "name": "homeFunctions",
+    "pageId": "Home",
+    "pluginId": "js-plugin",
+    "pluginType": "JS",
+    "variables": [
+      {
+        "name": "userData",
+        "value": "null"
+      },
+      {
+        "name": "distretto",
+        "value": "40"
+      }
+    ]
+  }
+}
