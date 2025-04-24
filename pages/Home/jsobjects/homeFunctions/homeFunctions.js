@@ -40,4 +40,23 @@ export default {
 	createToken: (user) => {
 		return jsonwebtoken.sign(user, this.secret, {expiresIn: 60*60});
 	},
+	doReport: () => {
+		this.scaricaCSV();
+	},
+	generaCSV: () => {
+	let mockData = getAllConvenzionati.data;
+		const csv = papaparse.unparse(mockData, {
+		header: true, // questa opzione è di default, ma puoi specificarla
+		delimiter: ";", // puoi cambiare il delimitatore se vuoi
+		newline: "\r\n"
+	});
+
+	// Ora "csv" è una stringa CSV con la prima riga come header
+	return csv;
+	},
+	scaricaCSV: () => {
+    const csv = this.generaCSV();
+	  console.log(csv);
+    download(csv, "assistiti.csv", "text/csv");
+  }
 }
