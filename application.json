@@ -23,6 +23,11 @@
   "applicationVersion": 2,
   "collapseInvisibleWidgets": true,
   "color": "#C7F3F0",
+  "embedSetting": {
+    "height": "720px",
+    "showNavigationBar": false,
+    "width": "1024px"
+  },
   "evaluationVersion": 2,
   "icon": "server-line",
   "pages": [

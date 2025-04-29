@@ -1,6 +1,6 @@
 {
-  "gitSyncId": "6808fda53361a34d8231cac0_b59b35d9-2b58-462f-959e-49e08b88bdfa",
-  "id": "Home_homeFunctions.initLoad",
+  "gitSyncId": "6808fda53361a34d8231cac0_02a59c0c-0554-4064-a3ef-268f1fc20e2f",
+  "id": "Home_homeFunctions.getDistrettiMap",
   "pluginId": "js-plugin",
   "pluginType": "JS",
   "unpublishedAction": {
@@ -22,10 +22,10 @@
         "key": "body"
       }
     ],
-    "executeOnLoad": true,
-    "fullyQualifiedName": "homeFunctions.initLoad",
-    "name": "initLoad",
+    "executeOnLoad": false,
+    "fullyQualifiedName": "homeFunctions.getDistrettiMap",
+    "name": "getDistrettiMap",
     "pageId": "Home",
-    "userSetOnLoad": true
+    "userSetOnLoad": false
   }
 }

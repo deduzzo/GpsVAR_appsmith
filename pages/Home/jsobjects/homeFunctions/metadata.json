@@ -12,8 +12,20 @@
         "value": "null"
       },
       {
-        "name": "distretto",
-        "value": "40"
+        "name": "secret",
+        "value": "\"UxZ>69'[Tu<6\""
+      },
+      {
+        "name": "distrettiMap",
+        "value": "{\n  byUnique: {},\n  byId: {}\n}"
+      },
+      {
+        "name": "periodo",
+        "value": "null"
+      },
+      {
+        "name": "variabiliInserite",
+        "value": "[]"
       }
     ]
   }

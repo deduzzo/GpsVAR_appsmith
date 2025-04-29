@@ -1,12 +1,16 @@
 {
-  "gitSyncId": "6808fda53361a34d8231cac0_b59b35d9-2b58-462f-959e-49e08b88bdfa",
-  "id": "Home_homeFunctions.initLoad",
+  "gitSyncId": "6808fda53361a34d8231cac0_11db183a-957c-4d34-bde7-2755ad8a3f4e",
+  "id": "Home_homeFunctions.getMeseItaliano",
   "pluginId": "js-plugin",
   "pluginType": "JS",
   "unpublishedAction": {
     "actionConfiguration": {
       "encodeParamsToggle": true,
-      "jsArguments": [],
+      "jsArguments": [
+        {
+          "name": "mese"
+        }
+      ],
       "paginationType": "NONE",
       "timeoutInMillisecond": 10000
     },
@@ -22,10 +26,10 @@
         "key": "body"
       }
     ],
-    "executeOnLoad": true,
-    "fullyQualifiedName": "homeFunctions.initLoad",
-    "name": "initLoad",
+    "executeOnLoad": false,
+    "fullyQualifiedName": "homeFunctions.getMeseItaliano",
+    "name": "getMeseItaliano",
     "pageId": "Home",
-    "userSetOnLoad": true
+    "userSetOnLoad": false
   }
 }

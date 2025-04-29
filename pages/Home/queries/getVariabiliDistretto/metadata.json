@@ -54,9 +54,28 @@
           "componentData": {
             "children": [
               {
-                "condition": "CONTAINS",
-                "key": "DESCRIZIONE",
-                "value": "{{homeFunctions.userData.distretto}}"
+                "children": [
+                  {
+                    "condition": "CONTAINS",
+                    "key": "DESCRIZIONE",
+                    "value": "{{homeFunctions.userData.codDistretto }}"
+                  },
+                  {
+                    "condition": "CONTAINS",
+                    "key": "PER_TUTTI",
+                    "value": "SI"
+                  }
+                ],
+                "condition": "OR"
+              },
+              {
+                "children": [
+                  {
+                    "condition": "EQ",
+                    "key": "ESCLUDI"
+                  }
+                ],
+                "condition": "AND"
               }
             ],
             "condition": "AND"
@@ -64,14 +83,24 @@
           "data": {
             "children": [
               {
-                "condition": "CONTAINS",
-                "key": "DESCRIZIONE",
-                "value": "{{homeFunctions.distretto }}"
-              },
-              {
-                "condition": "CONTAINS",
+                "condition": "EQ",
                 "key": "PER_TUTTI",
                 "value": "SI"
+              },
+              {
+                "children": [
+                  {
+                    "condition": "CONTAINS",
+                    "key": "DESCRIZIONE",
+                    "value": "{{homeFunctions.userData.codDistretto }}"
+                  },
+                  {
+                    "condition": "EQ",
+                    "key": "ESCLUDI",
+                    "value": ""
+                  }
+                ],
+                "condition": "AND"
               }
             ],
             "condition": "OR"
@@ -92,15 +121,15 @@
     },
     "dynamicBindingPathList": [
       {
-        "key": "formData.where.data.children[0].value"
+        "key": "formData.pagination.data.limit"
       },
       {
-        "key": "formData.pagination.data.limit"
+        "key": "formData.where.data.children[1].children[0].value"
       }
     ],
-    "executeOnLoad": true,
+    "executeOnLoad": false,
     "name": "getVariabiliDistretto",
     "pageId": "Home",
-    "userSetOnLoad": false
+    "userSetOnLoad": true
   }
 }

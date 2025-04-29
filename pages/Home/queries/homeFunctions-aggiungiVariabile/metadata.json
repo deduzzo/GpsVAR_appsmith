@@ -1,6 +1,6 @@
 {
-  "gitSyncId": "6808fda53361a34d8231cac0_b59b35d9-2b58-462f-959e-49e08b88bdfa",
-  "id": "Home_homeFunctions.initLoad",
+  "gitSyncId": "6808fda53361a34d8231cac0_560c17c8-ce50-427e-8859-16d999f13676",
+  "id": "Home_homeFunctions.aggiungiVariabile",
   "pluginId": "js-plugin",
   "pluginType": "JS",
   "unpublishedAction": {
@@ -22,10 +22,10 @@
         "key": "body"
       }
     ],
-    "executeOnLoad": true,
-    "fullyQualifiedName": "homeFunctions.initLoad",
-    "name": "initLoad",
+    "executeOnLoad": false,
+    "fullyQualifiedName": "homeFunctions.aggiungiVariabile",
+    "name": "aggiungiVariabile",
     "pageId": "Home",
-    "userSetOnLoad": true
+    "userSetOnLoad": false
   }
 }
