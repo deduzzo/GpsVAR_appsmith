@@ -2,31 +2,34 @@
   "accentColor": "{{appsmith.theme.colors.primaryColor}}",
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 18,
+  "bottomRow": 17,
   "boxShadow": "none",
-  "defaultOptionValue": "{{\n            {\n              label: Select2.options[0].label,\n              value: Select2.options[0].value\n            }\n          }}",
+  "defaultOptionValue": "null",
   "dynamicBindingPathList": [
     {
       "key": "sourceData"
-    },
-    {
-      "key": "defaultOptionValue"
     },
     {
       "key": "accentColor"
     },
     {
       "key": "borderRadius"
+    },
+    {
+      "key": "isDisabled"
     }
   ],
   "dynamicHeight": "FIXED",
   "dynamicPropertyPathList": [
     {
       "key": "sourceData"
+    },
+    {
+      "key": "isDisabled"
     }
   ],
   "dynamicTriggerPathList": [],
-  "isDisabled": false,
+  "isDisabled": "{{getVariabiliDistretto.isLoading}}",
   "isFilterable": true,
   "isLoading": false,
   "isRequired": false,
@@ -48,8 +51,8 @@
   "needsErrorInfo": false,
   "optionLabel": "label",
   "optionValue": "value",
-  "originalBottomRow": 16,
-  "originalTopRow": 9,
+  "originalBottomRow": 18,
+  "originalTopRow": 11,
   "parentId": "0",
   "parentRowSpace": 10,
   "placeholderText": "Select option",
@@ -58,7 +61,7 @@
   "rightColumn": 51,
   "serverSideFiltering": false,
   "sourceData": "{{getVariabiliDistretto.data.map( (obj) =>{ return  {'label': obj.DESCRIZIONE, 'value': obj.rowIndex } })}}",
-  "topRow": 11,
+  "topRow": 10,
   "type": "SELECT_WIDGET",
   "version": 1,
   "widgetId": "knd5z4kbd0",

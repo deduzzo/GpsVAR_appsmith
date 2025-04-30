@@ -4,7 +4,7 @@
   "borderColor": "#E0DEDE",
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
   "borderWidth": "1",
-  "bottomRow": 78,
+  "bottomRow": 77,
   "boxShadow": "{{appsmith.theme.boxShadow.appBoxShadow}}",
   "cachedTableData": {},
   "canFreezeColumn": true,
@@ -32,16 +32,16 @@
     }
   },
   "columnOrder": [
+    "descConvenzionato",
     "descVariabile",
     "valoreVariabile",
-    "descConvenzionato",
     "customColumn1",
     "idVariabile",
     "idConvenzionato"
   ],
-  "columnUpdatedAt": 1745919493585,
+  "columnUpdatedAt": 1746007037828,
   "columnWidthMap": {
-    "descConvenzionato": 333,
+    "descConvenzionato": 229,
     "descVariabile": 209
   },
   "customIsLoading": false,
@@ -90,9 +90,16 @@
   "dynamicPropertyPathList": [
     {
       "key": "tableData"
+    },
+    {
+      "key": "primaryColumns.customColumn1.onClick"
     }
   ],
-  "dynamicTriggerPathList": [],
+  "dynamicTriggerPathList": [
+    {
+      "key": "primaryColumns.customColumn1.onClick"
+    }
+  ],
   "enableClientSideSearch": true,
   "endOfData": false,
   "flexVerticalAlignment": "start",
@@ -114,8 +121,8 @@
   "mobileRightColumn": 40,
   "mobileTopRow": 17,
   "needsErrorInfo": false,
-  "originalBottomRow": 76,
-  "originalTopRow": 38,
+  "originalBottomRow": 78,
+  "originalTopRow": 40,
   "parentColumnSpace": 22.9375,
   "parentId": "0",
   "parentRowSpace": 10,
@@ -124,8 +131,8 @@
       "alias": "OP",
       "allowCellWrapping": false,
       "allowSameOptionsInNewRow": true,
-      "borderRadius": "{{Table1.processedTableData.map((currentRow, currentIndex) => ( (appsmith.theme.borderRadius.appBorderRadius)))}}",
-      "boxShadow": "{{Table1.processedTableData.map((currentRow, currentIndex) => ( \"none\"))}}",
+      "borderRadius": "{{tabellaVariabili.processedTableData.map((currentRow, currentIndex) => ( (appsmith.theme.borderRadius.appBorderRadius)))}}",
+      "boxShadow": "{{tabellaVariabili.processedTableData.map((currentRow, currentIndex) => ( \"none\"))}}",
       "buttonColor": "#E15615",
       "buttonStyle": "rgb(3, 179, 101)",
       "columnType": "iconButton",
@@ -150,6 +157,7 @@
       "label": "OP",
       "labelColor": "#FFFFFF",
       "notation": "standard",
+      "onClick": "{{showAlert(currentRow.index.toString())}}",
       "originalId": "customColumn1",
       "sticky": "",
       "textSize": "0.875rem",
@@ -164,7 +172,7 @@
       "allowSameOptionsInNewRow": true,
       "cellBackground": "",
       "columnType": "text",
-      "computedValue": "{{Table1.processedTableData.map((currentRow, currentIndex) => ( currentRow[\"descConvenzionato\"]))}}",
+      "computedValue": "{{tabellaVariabili.processedTableData.map((currentRow, currentIndex) => ( currentRow[\"descConvenzionato\"]))}}",
       "currencyCode": "USD",
       "decimals": 0,
       "enableFilter": true,
@@ -198,7 +206,7 @@
       "allowSameOptionsInNewRow": true,
       "cellBackground": "",
       "columnType": "text",
-      "computedValue": "{{Table1.processedTableData.map((currentRow, currentIndex) => ( currentRow[\"descVariabile\"]))}}",
+      "computedValue": "{{tabellaVariabili.processedTableData.map((currentRow, currentIndex) => ( currentRow[\"descVariabile\"]))}}",
       "currencyCode": "USD",
       "decimals": 0,
       "enableFilter": true,
@@ -232,7 +240,7 @@
       "allowSameOptionsInNewRow": true,
       "cellBackground": "",
       "columnType": "number",
-      "computedValue": "{{Table1.processedTableData.map((currentRow, currentIndex) => ( currentRow[\"idConvenzionato\"]))}}",
+      "computedValue": "{{tabellaVariabili.processedTableData.map((currentRow, currentIndex) => ( currentRow[\"idConvenzionato\"]))}}",
       "currencyCode": "USD",
       "decimals": 0,
       "enableFilter": true,
@@ -266,7 +274,7 @@
       "allowSameOptionsInNewRow": true,
       "cellBackground": "",
       "columnType": "number",
-      "computedValue": "{{Table1.processedTableData.map((currentRow, currentIndex) => ( currentRow[\"idVariabile\"]))}}",
+      "computedValue": "{{tabellaVariabili.processedTableData.map((currentRow, currentIndex) => ( currentRow[\"idVariabile\"]))}}",
       "currencyCode": "USD",
       "decimals": 0,
       "enableFilter": true,
@@ -300,7 +308,7 @@
       "allowSameOptionsInNewRow": true,
       "cellBackground": "",
       "columnType": "number",
-      "computedValue": "{{Table1.processedTableData.map((currentRow, currentIndex) => ( currentRow[\"valoreVariabile\"]))}}",
+      "computedValue": "{{tabellaVariabili.processedTableData.map((currentRow, currentIndex) => ( currentRow[\"valoreVariabile\"]))}}",
       "currencyCode": "USD",
       "decimals": 0,
       "enableFilter": true,
@@ -335,11 +343,11 @@
   "searchKey": "",
   "tableData": "{{ homeFunctions.variabiliInserite}}",
   "textSize": "0.875rem",
-  "topRow": 40,
+  "topRow": 39,
   "totalRecordsCount": 0,
   "type": "TABLE_WIDGET_V2",
   "version": 2,
   "verticalAlignment": "CENTER",
   "widgetId": "7r1a9r903q",
-  "widgetName": "Table1"
+  "widgetName": "tabellaVariabili"
 }

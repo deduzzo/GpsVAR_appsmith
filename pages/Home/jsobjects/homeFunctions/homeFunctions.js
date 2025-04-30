@@ -82,6 +82,15 @@ export default {
 		console.log(csv);
 		download(csv, "assistiti.csv", "text/csv");
 	},
+	// Funzione per rimuovere una riga dall'array
+removeRow: (rowIndex) => {
+  // Crea una copia dell'array attuale
+  const updatedArray = [...homeFunctions.variabiliInserite];
+  
+  // Rimuove l'elemento all'indice specificato
+  updatedArray.splice(rowIndex, 1);
+  homeFunctions.variabiliInserite = updatedArray;
+},
 	aggiungiVariabile: () => {
 		if (!variabileSelezionata.selectedOptionValue || !convenzionatoSelezionato.selectedOptionValue || !importoVariabile.text || importoVariabile.text === ""|| parseFloat(importoVariabile.text) === 0.0) 
 			showAlert("Selezionare il convenzionato, il tipo di variabile e l'importo")
