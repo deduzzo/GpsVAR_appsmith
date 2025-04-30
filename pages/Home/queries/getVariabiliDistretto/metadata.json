@@ -15,7 +15,7 @@
         },
         "pagination": {
           "data": {
-            "limit": "{{ 900000}}",
+            "limit": "999999999",
             "offset": "0"
           }
         },
@@ -120,9 +120,6 @@
       "pluginId": "google-sheets-plugin"
     },
     "dynamicBindingPathList": [
-      {
-        "key": "formData.pagination.data.limit"
-      },
       {
         "key": "formData.where.data.children[1].children[0].value"
       }

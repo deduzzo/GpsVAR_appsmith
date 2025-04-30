@@ -26,6 +26,9 @@ export default {
 			this.distrettiMap.byId[distretto.old_code] = distretto;
 		}
 	},
+	getMd5: (data) => {
+		return crypto_js.MD5(data).toString();
+	},
 	verifyTokenExpires: () => {
 		let expired = false;
 		//console.log(appsmith.store.token);
@@ -83,24 +86,23 @@ export default {
 		download(csv, "assistiti.csv", "text/csv");
 	},
 	// Funzione per rimuovere una riga dall'array
-removeRow: (rowIndex) => {
-  // Crea una copia dell'array attuale
-  const updatedArray = [...homeFunctions.variabiliInserite];
-  
-  // Rimuove l'elemento all'indice specificato
-  updatedArray.splice(rowIndex, 1);
-  homeFunctions.variabiliInserite = updatedArray;
-},
+	removeRow(hashToRemove) {
+    // Filtra l'array rimuovendo l'elemento con il campo hash uguale a hashToRemove
+    homeFunctions.variabiliInserite = homeFunctions.variabiliInserite.filter(
+      (item) => item.hash !== hashToRemove
+    );
+  },
 	aggiungiVariabile: () => {
 		if (!variabileSelezionata.selectedOptionValue || !convenzionatoSelezionato.selectedOptionValue || !importoVariabile.text || importoVariabile.text === ""|| parseFloat(importoVariabile.text) === 0.0) 
 			showAlert("Selezionare il convenzionato, il tipo di variabile e l'importo")
 		else {
 			this.variabiliInserite.push({
+				hash: this.getMd5(variabileSelezionata.selectedOptionValue + "_" + convenzionatoSelezionato.selectedOptionValue),
 				idVariabile: variabileSelezionata.selectedOptionValue,
 				descVariabile: variabileSelezionata.selectedOptionLabel,
 				idConvenzionato: convenzionatoSelezionato.selectedOptionValue,
 				descConvenzionato: convenzionatoSelezionato.selectedOptionLabel,
-				valoreVariabile: parseFloat(importoVariabile.text)
+				valoreVariabile: parseFloat(importoVariabile.text),
 			})
 			convenzionatoSelezionato.setSelectedOption("");
 			variabileSelezionata.setSelectedOption("");

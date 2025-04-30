@@ -16,6 +16,10 @@ export default {
 	generatePasswordHash: async () => {
 		return dcodeIO.bcrypt.hashSync(inp_password.text, 10);
 	},
+	
+	showPasswordHash: async () => {
+		console.log(await this.generatePasswordHash());
+	},
 
 	verifyHash: (password, hash) => {
 		return dcodeIO.bcrypt.compareSync(password, hash)
