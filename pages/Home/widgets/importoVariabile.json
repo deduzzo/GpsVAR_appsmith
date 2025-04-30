@@ -3,7 +3,7 @@
   "animateLoading": true,
   "autoFocus": false,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 27,
+  "bottomRow": 16,
   "boxShadow": "none",
   "defaultText": "",
   "dynamicBindingPathList": [
@@ -12,14 +12,22 @@
     },
     {
       "key": "borderRadius"
+    },
+    {
+      "key": "isDisabled"
     }
   ],
   "dynamicHeight": "FIXED",
+  "dynamicPropertyPathList": [
+    {
+      "key": "isDisabled"
+    }
+  ],
   "dynamicTriggerPathList": [],
   "iconAlign": "left",
   "iconName": "numerical",
   "inputType": "NUMBER",
-  "isDisabled": false,
+  "isDisabled": "{{!variabileSelezionata.selectedOptionValue || !convenzionatoSelezionato.selectedOptionValue || !homeFunctions.periodo}}",
   "isLoading": false,
   "isRequired": false,
   "isVisible": true,
@@ -30,7 +38,7 @@
   "labelStyle": "",
   "labelTextSize": "0.875rem",
   "labelWidth": 5,
-  "leftColumn": 23,
+  "leftColumn": 42,
   "maxDynamicHeight": 9000,
   "minDynamicHeight": 4,
   "minWidth": 450,
@@ -39,18 +47,18 @@
   "mobileRightColumn": 39,
   "mobileTopRow": 15,
   "needsErrorInfo": false,
-  "originalBottomRow": 27,
-  "originalTopRow": 20,
+  "originalBottomRow": 17,
+  "originalTopRow": 10,
   "parentColumnSpace": 20.25,
   "parentId": "0",
   "parentRowSpace": 10,
   "renderMode": "CANVAS",
   "resetOnSubmit": true,
   "responsiveBehavior": "fill",
-  "rightColumn": 34,
+  "rightColumn": 53,
   "shouldAllowAutofill": false,
   "showStepArrows": false,
-  "topRow": 20,
+  "topRow": 9,
   "type": "INPUT_WIDGET_V2",
   "version": 2,
   "widgetId": "a4x7jm1p56",

@@ -86,10 +86,10 @@ export default {
 		download(csv, "assistiti.csv", "text/csv");
 	},
 	// Funzione per rimuovere una riga dall'array
-	removeRow(hashToRemove) {
+	removeRow(idToRemove) {
     // Filtra l'array rimuovendo l'elemento con il campo hash uguale a hashToRemove
     homeFunctions.variabiliInserite = homeFunctions.variabiliInserite.filter(
-      (item) => item.hash !== hashToRemove
+      (item) => item.idVariabile !== idToRemove
     );
   },
 	aggiungiVariabile: () => {
@@ -97,7 +97,6 @@ export default {
 			showAlert("Selezionare il convenzionato, il tipo di variabile e l'importo")
 		else {
 			this.variabiliInserite.push({
-				hash: this.getMd5(variabileSelezionata.selectedOptionValue + "_" + convenzionatoSelezionato.selectedOptionValue),
 				idVariabile: variabileSelezionata.selectedOptionValue,
 				descVariabile: variabileSelezionata.selectedOptionLabel,
 				idConvenzionato: convenzionatoSelezionato.selectedOptionValue,
