@@ -28,7 +28,11 @@
       "key": "isDisabled"
     }
   ],
-  "dynamicTriggerPathList": [],
+  "dynamicTriggerPathList": [
+    {
+      "key": "onOptionChange"
+    }
+  ],
   "isDisabled": "{{getVariabiliDistretto.isLoading || !homeFunctions.periodo}}",
   "isFilterable": true,
   "isLoading": false,
@@ -49,6 +53,7 @@
   "mobileRightColumn": 20,
   "mobileTopRow": 74,
   "needsErrorInfo": false,
+  "onOptionChange": "",
   "optionLabel": "label",
   "optionValue": "value",
   "originalBottomRow": 17,

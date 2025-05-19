@@ -26,6 +26,10 @@
       {
         "name": "variabiliInserite",
         "value": "[]"
+      },
+      {
+        "name": "variabiliMap",
+        "value": "{}"
       }
     ]
   }

@@ -4,15 +4,23 @@ export default {
 	distrettiMap: {byUnique: {}, byId: {}},
 	periodo: null,
 	variabiliInserite: [],
+	variabiliMap: {},
 	async initLoad() {
 		this.getDistrettiMap();
 		this.verifyTokenExpires();
 		this.getPeriodo();
-		getVariabiliDistretto.run();
+		this.getVariabiliDistretto();
 	},
 	getMeseItaliano: (mese) => {
 		let mesi = 'Gennaio_Febbraio_Marzo_Aprile_Maggio_Giugno_Luglio_Agosto_Settembre_Ottobre_Novembre_Dicembre'.split('_');
 		return mesi[mese-1];
+	},
+	getVariabiliDistretto: () => {
+	  this.variabiliMap = {};
+		let variabili = getVariabiliDistretto.data;
+		for (let variabile of variabili) {
+			this.variabiliMap[variabile['#']] = variabile;
+		}
 	},
 	getPeriodo: () => {
 		let periodo = getPeriodo.data;
