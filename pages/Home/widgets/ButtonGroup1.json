@@ -1,7 +1,7 @@
 {
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 6,
+  "bottomRow": 5,
   "boxShadow": "none",
   "buttonVariant": "PRIMARY",
   "childStylesheet": {
@@ -30,9 +30,30 @@
     },
     {
       "key": "groupButtons.groupButton3.label"
+    },
+    {
+      "key": "groupButtons.groupButtonezzecblo8e.menuItems.menuItem3lu8z6dvro.isVisible"
+    },
+    {
+      "key": "groupButtons.groupButtonezzecblo8e.menuItems.menuItemfl5urg45l0.backgroundColor"
     }
   ],
-  "dynamicTriggerPathList": [],
+  "dynamicPropertyPathList": [
+    {
+      "key": "groupButtons.groupButtonezzecblo8e.menuItems.menuItem3lu8z6dvro.isVisible"
+    },
+    {
+      "key": "groupButtons.groupButtonezzecblo8e.menuItems.menuItemfl5urg45l0.onClick"
+    }
+  ],
+  "dynamicTriggerPathList": [
+    {
+      "key": "groupButtons.groupButtonezzecblo8e.menuItems.menuItem3lu8z6dvro.onClick"
+    },
+    {
+      "key": "groupButtons.groupButtonezzecblo8e.menuItems.menuItemfl5urg45l0.onClick"
+    }
+  ],
   "groupButtons": {
     "groupButton1": {
       "buttonColor": "{{appsmith.theme.colors.primaryColor}}",
@@ -116,7 +137,7 @@
     },
     "groupButtonezzecblo8e": {
       "buttonColor": "{{appsmith.theme.colors.primaryColor}}",
-      "buttonType": "SIMPLE",
+      "buttonType": "MENU",
       "iconName": "more",
       "id": "groupButtonezzecblo8e",
       "index": 3,
@@ -125,7 +146,34 @@
       "isVisible": true,
       "itemType": "BUTTON",
       "label": "Menu",
-      "menuItems": {},
+      "menuItems": {
+        "menuItem3lu8z6dvro": {
+          "backgroundColor": "#cf4d10",
+          "iconColor": "#fde047",
+          "iconName": "pin",
+          "id": "menuItem3lu8z6dvro",
+          "index": 1,
+          "isDisabled": false,
+          "isVisible": "{{homeFunctions.userData.livello >= 2}}",
+          "label": "Admin Menu",
+          "onClick": "{{showModal(adminModal.name);}}",
+          "textColor": "#fef9c3",
+          "widgetId": "dro15j3voz"
+        },
+        "menuItemfl5urg45l0": {
+          "backgroundColor": "{{appsmith.theme.colors.primaryColor}}",
+          "iconColor": "#fef9c3",
+          "iconName": "document-share",
+          "id": "menuItemfl5urg45l0",
+          "index": 0,
+          "isDisabled": false,
+          "isVisible": true,
+          "label": "Scarica Report distretto",
+          "onClick": "{{homeFunctions.reportDistrettoPDF()}}",
+          "textColor": "#fef9c3",
+          "widgetId": "mtfcpbtkyb"
+        }
+      },
       "placement": "CENTER",
       "variant": "filled",
       "widgetId": "kosv8nz6n6"
@@ -151,7 +199,7 @@
   "renderMode": "CANVAS",
   "responsiveBehavior": "fill",
   "rightColumn": 60,
-  "topRow": 2,
+  "topRow": 1,
   "type": "BUTTON_GROUP_WIDGET",
   "version": 1,
   "widgetId": "kqrh7nuwk5",

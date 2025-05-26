@@ -31,7 +31,7 @@
   "mobileRightColumn": 64,
   "mobileTopRow": 0,
   "needsErrorInfo": false,
-  "onClick": "{{closeModal(Modal1.name);}}",
+  "onClick": "{{closeModal(adminModal.name);}}",
   "parentId": "lt4iylkmzz",
   "renderMode": "CANVAS",
   "responsiveBehavior": "hug",

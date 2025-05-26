@@ -9,7 +9,7 @@
     "variables": [
       {
         "name": "livelli",
-        "value": "{\n  \"-1\": \"SuperAdmin\",\n  \"1\": \"Utente\",\n  \"2\": \"Admin Distretto\",\n  \"3\": \"Amministratore\"\n}"
+        "value": "{\n  \"100\": \"SuperAdmin\",\n  \"1\": \"Utente\",\n  \"2\": \"Admin Distretto\",\n  \"3\": \"Amministratore\"\n}"
       },
       {
         "name": "userData",

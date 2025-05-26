@@ -2,13 +2,10 @@
   "accentColor": "{{appsmith.theme.colors.primaryColor}}",
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 21,
+  "bottomRow": 14,
   "boxShadow": "none",
-  "defaultOptionValue": "null",
+  "defaultOptionValue": "{{ ((options, serverSideFiltering) => ( homeFunctions.periodo.mese))(meseCompetenza.options, meseCompetenza.serverSideFiltering) }}",
   "dynamicBindingPathList": [
-    {
-      "key": "sourceData"
-    },
     {
       "key": "accentColor"
     },
@@ -16,59 +13,53 @@
       "key": "borderRadius"
     },
     {
-      "key": "isDisabled"
+      "key": "sourceData"
+    },
+    {
+      "key": "defaultOptionValue"
     }
   ],
   "dynamicHeight": "FIXED",
   "dynamicPropertyPathList": [
     {
       "key": "sourceData"
-    },
-    {
-      "key": "isDisabled"
     }
   ],
-  "dynamicTriggerPathList": [
-    {
-      "key": "onOptionChange"
-    }
-  ],
-  "isDisabled": "{{getVariabiliDistretto.isLoading || !homeFunctions.periodo}}",
+  "dynamicTriggerPathList": [],
+  "isDisabled": false,
   "isFilterable": true,
   "isLoading": false,
-  "isRequired": false,
+  "isRequired": true,
   "isVisible": true,
-  "key": "5okc8199n1",
+  "key": "caj75zdhcb",
   "labelAlignment": "left",
   "labelPosition": "Top",
-  "labelText": "Variabile",
+  "labelText": "Mese comp.",
   "labelTextSize": "0.875rem",
   "labelWidth": 5,
-  "leftColumn": 16,
+  "leftColumn": 10,
   "maxDynamicHeight": 9000,
   "minDynamicHeight": 4,
   "minWidth": 450,
-  "mobileBottomRow": 81,
+  "mobileBottomRow": 24,
   "mobileLeftColumn": 0,
   "mobileRightColumn": 20,
-  "mobileTopRow": 74,
+  "mobileTopRow": 17,
   "needsErrorInfo": false,
-  "onOptionChange": "",
-  "optionLabel": "label",
+  "optionLabel": "mese",
   "optionValue": "value",
-  "originalBottomRow": 17,
-  "originalTopRow": 10,
+  "parentColumnSpace": 20.25,
   "parentId": "0",
   "parentRowSpace": 10,
-  "placeholderText": "variabili...",
+  "placeholderText": "Select option",
   "renderMode": "CANVAS",
   "responsiveBehavior": "fill",
-  "rightColumn": 32,
+  "rightColumn": 16,
   "serverSideFiltering": false,
-  "sourceData": "{{getVariabiliDistretto.data.map( (obj) =>{ return  {'label': obj.DESCRIZIONE, 'value': obj[\"#\"] } })}}",
-  "topRow": 14,
+  "sourceData": "{{ homeFunctions.getMesiMap()}}",
+  "topRow": 7,
   "type": "SELECT_WIDGET",
   "version": 1,
-  "widgetId": "knd5z4kbd0",
-  "widgetName": "variabileSelezionata"
+  "widgetId": "yn16uhjdye",
+  "widgetName": "meseCompetenza"
 }
