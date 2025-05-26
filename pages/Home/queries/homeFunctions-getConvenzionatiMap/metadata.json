@@ -1,16 +1,12 @@
 {
-  "gitSyncId": "68129af8a74b143200f85645_baf0ea34-45ae-41e8-ae18-6bc1035d2d5b",
-  "id": "Home_homeFunctions.removeRow",
+  "gitSyncId": "6808fda53361a34d8231cac0_b6177ddc-e929-42a4-80e5-edc529c377c6",
+  "id": "Home_homeFunctions.getConvenzionatiMap",
   "pluginId": "js-plugin",
   "pluginType": "JS",
   "unpublishedAction": {
     "actionConfiguration": {
       "encodeParamsToggle": true,
-      "jsArguments": [
-        {
-          "name": "row"
-        }
-      ],
+      "jsArguments": [],
       "paginationType": "NONE",
       "timeoutInMillisecond": 10000
     },
@@ -27,8 +23,8 @@
       }
     ],
     "executeOnLoad": false,
-    "fullyQualifiedName": "homeFunctions.removeRow",
-    "name": "removeRow",
+    "fullyQualifiedName": "homeFunctions.getConvenzionatiMap",
+    "name": "getConvenzionatiMap",
     "pageId": "Home",
     "userSetOnLoad": false
   }

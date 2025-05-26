@@ -124,7 +124,7 @@
         "key": "formData.where.data.children[1].children[0].value"
       }
     ],
-    "executeOnLoad": false,
+    "executeOnLoad": true,
     "name": "getVariabiliDistretto",
     "pageId": "Home",
     "userSetOnLoad": true

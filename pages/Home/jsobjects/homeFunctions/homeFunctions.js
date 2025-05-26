@@ -1,26 +1,44 @@
 export default {
+	livelli: {
+		"-1": "SuperAdmin",
+		"1": "Utente",
+		"2": "Admin Distretto",
+		"3": "Amministratore"
+	},
 	userData: null,
 	secret: "UxZ>69'[Tu<6",
 	distrettiMap: {byUnique: {}, byId: {}},
 	periodo: null,
 	variabiliInserite: [],
-	variabiliMap: {},
+	allVariabiliMap: {},
+	allConvenzionatiMap: {},
 	async initLoad() {
 		this.getDistrettiMap();
-		this.verifyTokenExpires();
+		//this.verifyTokenExpires();
 		this.getPeriodo();
 		this.getVariabiliDistretto();
+		this.getConvenzionatiMap();
+		getDatiVarDistrettoPeriodo.run();
 	},
 	getMeseItaliano: (mese) => {
 		let mesi = 'Gennaio_Febbraio_Marzo_Aprile_Maggio_Giugno_Luglio_Agosto_Settembre_Ottobre_Novembre_Dicembre'.split('_');
 		return mesi[mese-1];
 	},
 	getVariabiliDistretto: () => {
-	  this.variabiliMap = {};
-		let variabili = getVariabiliDistretto.data;
-		for (let variabile of variabili) {
-			this.variabiliMap[variabile['#']] = variabile;
-		}
+		this.allVariabiliMap = {};
+		let variabili = getVariabiliDistretto.run().then( () => {
+			for (let variabile of getVariabiliDistretto.data) {
+				this.allVariabiliMap[variabile['#']] = variabile;
+			}
+		});
+	},
+	getConvenzionatiMap: () => {
+		this.allConvenzionatiMap = {};
+		let convenzionati = getAllConvenzionati.run().then( () => {
+			for (let convenzionato of getAllConvenzionati.data) {
+				this.allConvenzionatiMap[convenzionato['CI']] = convenzionato;
+			}
+		});
 	},
 	getPeriodo: () => {
 		let periodo = getPeriodo.data;
@@ -48,8 +66,11 @@ export default {
 				this.userData = {
 					username: decoded.data.user, 
 					distretto: decoded.data.id_distretto,
+					livelloText: this.livelli[decoded.data.livello.toString()],
+					livello: decoded.data.livello,
 					mail: decoded.data.mail,
-					codDistretto: this.distrettiMap.byUnique[decoded.data.id_distretto].old_code
+					codDistretto: this.distrettiMap.byUnique[decoded.data.id_distretto].old_code,
+					distrettoTxt: this.distrettiMap.byUnique[this.userData.distretto].descrizione
 				}
 				const newToken = this.createToken({data: decoded.data});
 				//console.log("new token");
@@ -94,26 +115,38 @@ export default {
 		download(csv, "assistiti.csv", "text/csv");
 	},
 	// Funzione per rimuovere una riga dall'array
-	removeRow(idToRemove) {
-    // Filtra l'array rimuovendo l'elemento con il campo hash uguale a hashToRemove
-    homeFunctions.variabiliInserite = homeFunctions.variabiliInserite.filter(
-      (item) => item.idVariabile !== idToRemove
-    );
-  },
+	removeRow(row) {
+		console.log(row);
+		deleteFromRowIndex.run({ rowIndex: row.rowIndex}).then( () => {
+			getDatiVarDistrettoPeriodo.run();
+			showAlert("Riga eliminata, elenco aggiornato.", "info")
+		});
+	},
 	aggiungiVariabile: () => {
 		if (!variabileSelezionata.selectedOptionValue || !convenzionatoSelezionato.selectedOptionValue || !importoVariabile.text || importoVariabile.text === ""|| parseFloat(importoVariabile.text) === 0.0) 
 			showAlert("Selezionare il convenzionato, il tipo di variabile e l'importo")
 		else {
-			this.variabiliInserite.push({
-				idVariabile: variabileSelezionata.selectedOptionValue,
-				descVariabile: variabileSelezionata.selectedOptionLabel,
-				idConvenzionato: convenzionatoSelezionato.selectedOptionValue,
-				descConvenzionato: convenzionatoSelezionato.selectedOptionLabel,
-				valoreVariabile: parseFloat(importoVariabile.text),
-			})
-			convenzionatoSelezionato.setSelectedOption("");
-			variabileSelezionata.setSelectedOption("");
-			importoVariabile.setValue("");
+			aggiungiVariabile.setDisabled(true);
+			getVarVocePeriodoConv.run().then(() => {
+				if (getVarVocePeriodoConv.data.length === 0) {
+					statusTxt.setText("Caricamento in corso.. attendere");
+
+					aggiungiDatiVariabile.run().then( () => {
+						getDatiVarDistrettoPeriodo.run();
+						convenzionatoSelezionato.setSelectedOption("");
+						variabileSelezionata.setSelectedOption("");
+						importoVariabile.setValue("");
+						altriDati.setValue("");
+						statusTxt.setText("");
+						showAlert("Variabile inserita correttamente","info");
+					})
+				}
+				else {
+					showAlert("ERRORE! Esiste già lo stesso tipo di variabile per il convenzionato selezionato. Se il valore non è corretto è necessario eliminare quella già presente e reinserirla.","error");
+					statusTxt.setText("");
+					aggiungiVariabile.setDisabled(!convenzionatoSelezionato.selectedOptionValue || !variabileSelezionata.selectedOptionValue || !importoVariabile.text || importoVariabile.text=== "" || !homeFunctions.periodo || (altriDati.isVisible && (altriDati.text === "" || !altriDati.text)));
+				}
+			});
 		}
 	}
 }

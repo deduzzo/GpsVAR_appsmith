@@ -1,7 +1,7 @@
 {
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 7,
+  "bottomRow": 5,
   "dynamicBindingPathList": [
     {
       "key": "truncateButtonColor"
@@ -11,45 +11,37 @@
     },
     {
       "key": "borderRadius"
-    },
-    {
-      "key": "text"
     }
   ],
   "dynamicHeight": "AUTO_HEIGHT",
-  "dynamicTriggerPathList": [],
   "fontFamily": "{{appsmith.theme.fontFamily.appFont}}",
-  "fontSize": "1rem",
+  "fontSize": "1.25rem",
   "fontStyle": "BOLD",
   "isLoading": false,
   "isVisible": true,
-  "key": "y984e8sfim",
-  "leftColumn": 33,
+  "key": "oanv05sbno",
+  "leftColumn": 1,
   "maxDynamicHeight": 9000,
   "minDynamicHeight": 4,
   "minWidth": 450,
   "mobileBottomRow": 5,
-  "mobileLeftColumn": 30,
-  "mobileRightColumn": 46,
+  "mobileLeftColumn": 1,
+  "mobileRightColumn": 41,
   "mobileTopRow": 1,
   "needsErrorInfo": false,
-  "originalBottomRow": 6,
-  "originalTopRow": 2,
   "overflow": "NONE",
-  "parentColumnSpace": 20.25,
-  "parentId": "0",
-  "parentRowSpace": 10,
+  "parentId": "lt4iylkmzz",
   "renderMode": "CANVAS",
   "responsiveBehavior": "fill",
-  "rightColumn": 53,
+  "rightColumn": 41,
   "shouldTruncate": false,
-  "text": "Periodo: {{homeFunctions.periodo ? (\"Anno \" +homeFunctions.periodo.anno + \" mese di \" + homeFunctions.getMeseItaliano(homeFunctions.periodo.mese) + \"\\n Scadenza inserimento variabili: \" + moment(homeFunctions.periodo.data_fine).format(\"DD/MM/YYYY\") ) : \"Nessun Periodo di inserimento variabili attivo\"}}",
+  "text": "Modal Title",
   "textAlign": "LEFT",
   "textColor": "#231F20",
-  "topRow": 2,
+  "topRow": 1,
   "truncateButtonColor": "{{appsmith.theme.colors.primaryColor}}",
   "type": "TEXT_WIDGET",
   "version": 1,
-  "widgetId": "435v7z88ig",
-  "widgetName": "Text2"
+  "widgetId": "9bl6p5ad41",
+  "widgetName": "Text3"
 }

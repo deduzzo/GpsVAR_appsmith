@@ -1,6 +1,6 @@
 {
-  "gitSyncId": "6808fda53361a34d8231cac0_4f0bbecb-4299-4f3f-bc40-f6bb25da3007",
-  "id": "Home_getPeriodo",
+  "gitSyncId": "6808fda53361a34d8231cac0_c5f6eed9-ba59-462f-94b6-1210e200444f",
+  "id": "Home_getVarVocePeriodoConv",
   "pluginId": "google-sheets-plugin",
   "pluginType": "SAAS",
   "unpublishedAction": {
@@ -15,7 +15,7 @@
         },
         "pagination": {
           "data": {
-            "limit": "1",
+            "limit": "20",
             "offset": "0"
           }
         },
@@ -29,7 +29,7 @@
           "data": ""
         },
         "sheetName": {
-          "data": "periodi"
+          "data": "dati"
         },
         "sheetUrl": {
           "componentData": "",
@@ -42,7 +42,7 @@
         "sortBy": {
           "data": [
             {
-              "column": "data_inizio",
+              "column": "",
               "order": "Ascending"
             }
           ]
@@ -54,28 +54,19 @@
           "data": {
             "children": [
               {
-                "condition": "LTE",
-                "key": "data_inizio",
-                "value": "{{moment().format('YYYY-MM-DD')}}"
+                "condition": "EQ",
+                "key": "periodo",
+                "value": "{{ homeFunctions.periodo.anno + \"_\" + homeFunctions.periodo.mese}}"
               },
               {
-                "condition": "GTE",
-                "key": "data_fine",
-                "value": "{{moment().format('YYYY-MM-DD')}}"
+                "condition": "EQ",
+                "key": "id_conv",
+                "value": "{{ convenzionatoSelezionato.selectedOptionValue}}"
               },
               {
-                "children": [
-                  {
-                    "condition": "EQ",
-                    "key": "disabilitato"
-                  },
-                  {
-                    "condition": "NOT_IN",
-                    "key": "disabilitato",
-                    "value": "{{['si']}}"
-                  }
-                ],
-                "condition": "OR"
+                "condition": "EQ",
+                "key": "voce",
+                "value": "{{ variabileSelezionata.selectedOptionValue}}"
               }
             ],
             "condition": "AND"
@@ -100,11 +91,11 @@
         "key": "formData.where.data.children[1].value"
       },
       {
-        "key": "formData.where.data.children[2].children[1].value"
+        "key": "formData.where.data.children[2].value"
       }
     ],
-    "executeOnLoad": true,
-    "name": "getPeriodo",
+    "executeOnLoad": false,
+    "name": "getVarVocePeriodoConv",
     "pageId": "Home",
     "userSetOnLoad": false
   }

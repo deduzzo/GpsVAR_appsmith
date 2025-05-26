@@ -49,6 +49,9 @@
       },
       {
         "key": "queryParameters[1].value"
+      },
+      {
+        "key": "path"
       }
     ],
     "executeOnLoad": false,

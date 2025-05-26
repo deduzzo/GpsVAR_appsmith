@@ -4,6 +4,9 @@ export default {
 	secret: "UxZ>69'[Tu<6",
 	scope: "gpsvar",
 
+	init: () => {
+
+	},
 	setDefaultTab: (newTab) => {
 		this.defaultTab = newTab;
 	},

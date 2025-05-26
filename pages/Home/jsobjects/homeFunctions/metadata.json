@@ -8,6 +8,10 @@
     "pluginType": "JS",
     "variables": [
       {
+        "name": "livelli",
+        "value": "{\n  \"-1\": \"SuperAdmin\",\n  \"1\": \"Utente\",\n  \"2\": \"Admin Distretto\",\n  \"3\": \"Amministratore\"\n}"
+      },
+      {
         "name": "userData",
         "value": "null"
       },
@@ -28,7 +32,11 @@
         "value": "[]"
       },
       {
-        "name": "variabiliMap",
+        "name": "allVariabiliMap",
+        "value": "{}"
+      },
+      {
+        "name": "allConvenzionatiMap",
         "value": "{}"
       }
     ]
