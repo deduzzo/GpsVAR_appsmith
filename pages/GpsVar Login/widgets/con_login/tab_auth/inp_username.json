@@ -1,7 +1,7 @@
 {
   "accentColor": "{{appsmith.theme.colors.primaryColor}}",
   "animateLoading": true,
-  "autoFocus": "false",
+  "autoFocus": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
   "bottomRow": 30,
   "boxShadow": "none",
@@ -19,9 +19,6 @@
   "dynamicPropertyPathList": [
     {
       "key": "onSubmit"
-    },
-    {
-      "key": "autoFocus"
     }
   ],
   "dynamicTriggerPathList": [
