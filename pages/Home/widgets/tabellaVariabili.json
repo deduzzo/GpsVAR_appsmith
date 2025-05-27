@@ -342,7 +342,7 @@
       "allowSameOptionsInNewRow": true,
       "cellBackground": "",
       "columnType": "number",
-      "computedValue": "{{(() => { const tableData = tabellaVariabili.processedTableData || []; return tableData.length > 0 ? tableData.map((currentRow, currentIndex) => ( homeFunctions.allConvenzionatiMap[currentRow[\"id_conv\"]].COGNOME + \" \" + homeFunctions.allConvenzionatiMap[currentRow[\"id_conv\"]].NOME + \" - [\" + homeFunctions.allConvenzionatiMap[currentRow[\"id_conv\"]].RAPPORTO + \"]\")) :  homeFunctions.allConvenzionatiMap[currentRow[\"id_conv\"]].COGNOME + \" \" + homeFunctions.allConvenzionatiMap[currentRow[\"id_conv\"]].NOME + \" - [\" + homeFunctions.allConvenzionatiMap[currentRow[\"id_conv\"]].RAPPORTO + \"]\" })()}}",
+      "computedValue": "{{(() => { const tableData = tabellaVariabili.processedTableData || []; return tableData.length > 0 ? tableData.map((currentRow, currentIndex) => ( homeFunctions.getConvenzionatoDescFromId(currentRow[\"id_conv\"]) )) :  homeFunctions.getConvenzionatoDescFromId(currentRow[\"id_conv\"])  })()}}",
       "currencyCode": "USD",
       "decimals": 0,
       "enableFilter": true,

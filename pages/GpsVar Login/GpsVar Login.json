@@ -1,23 +1,24 @@
 {
-  "gitSyncId": "6808fda53361a34d8231cac0_bb449fc7-aeb9-4762-b841-9de3d3e3d133",
+  "gitSyncId": "6808fda53361a34d8231cac0_f0bada27-d90b-435c-b3f0-d173d7ce44fe",
   "unpublishedPage": {
     "isHidden": true,
     "layouts": [
       {
         "dsl": {
           "backgroundColor": "none",
-          "bottomRow": 770,
+          "bottomRow": 650,
           "canExtend": true,
           "containerStyle": "none",
           "detachFromLayout": true,
           "dynamicBindingPathList": [],
+          "dynamicTriggerPathList": [],
           "leftColumn": 0,
-          "minHeight": 960,
+          "minHeight": 1292,
           "parentColumnSpace": 1,
           "parentRowSpace": 1,
-          "rightColumn": 1224,
+          "rightColumn": 4896,
           "snapColumns": 64,
-          "snapRows": 94,
+          "snapRows": 124,
           "topRow": 0,
           "type": "CANVAS_WIDGET",
           "version": 92,
@@ -26,7 +27,7 @@
         }
       }
     ],
-    "name": "Home",
-    "slug": "home"
+    "name": "GpsVar Login",
+    "slug": "gpsvar-login"
   }
 }

@@ -41,9 +41,6 @@
   "dynamicPropertyPathList": [
     {
       "key": "groupButtons.groupButtonezzecblo8e.menuItems.menuItem3lu8z6dvro.isVisible"
-    },
-    {
-      "key": "groupButtons.groupButtonezzecblo8e.menuItems.menuItemfl5urg45l0.onClick"
     }
   ],
   "dynamicTriggerPathList": [
@@ -169,7 +166,7 @@
           "isDisabled": false,
           "isVisible": true,
           "label": "Scarica Report distretto",
-          "onClick": "{{homeFunctions.reportDistrettoPDF()}}",
+          "onClick": "{{homeFunctions.reportDistrettoPDF();\nshowModal(modalReportDistretto.name);}}",
           "textColor": "#fef9c3",
           "widgetId": "mtfcpbtkyb"
         }
