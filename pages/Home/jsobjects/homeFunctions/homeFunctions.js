@@ -1,4 +1,7 @@
 export default {
+	/* =======================
+	   VARIABILI DI STATO
+	======================= */
 	livelli: {
 		"100": "SuperAdmin",
 		"1": "Utente",
@@ -8,338 +11,352 @@ export default {
 	userData: null,
 	distrettoCambiato: false,
 	secret: "UxZ>69'[Tu<6",
-	distrettiMap: {byUnique: {}, byId: {}},
+	distrettiMap: { byUnique: {}, byId: {} },
 	periodo: null,
 	variabiliInserite: [],
 	allVariabiliMap: {},
 	allConvenzionatiMap: {},
 	filtraPerNomeUtente: true,
+
+	/* =======================
+	   LOAD INIZIALE
+	======================= */
 	async initLoad() {
-		this.getDistrettiMap();
-		this.verifyTokenExpires();
-		this.getPeriodo();
-		this.getVariabiliDistretto();
-		this.getConvenzionatiMap();
-		getDatiVarDistrettoPeriodo.run();
+		showModal(caricamentoMdl.name);
+
+		try {
+			await this.getDistrettiMap();          // 1
+			await this.verifyTokenExpires();       // 2
+			await this.getPeriodo();               // 3
+			await this.getVariabiliDistretto();    // 4
+			await this.getConvenzionatiMap();      // 5
+			await getDatiVarDistrettoPeriodo.run(); // 6
+		} catch (err) {
+			console.error("Errore in initLoad:", err);
+			showAlert("Si è verificato un errore nel caricamento iniziale", "error");
+		} finally {
+			closeModal(caricamentoMdl.name);
+		}
 	},
+
+	/* =======================
+	   AUTENTICAZIONE / LOGOUT
+	======================= */
 	doLogout: (msg = "Logout effettuato", type = "info") => {
-		storeValue("token",null);
-		storeValue("message", {msg:msg, type:type});
+		storeValue("token", null);
+		storeValue("message", { msg, type });
 		navigateTo("GpsVar Login");
 	},
-	getLast10YearsMap: (currentYear =  moment().get("year")) => {
-		console.log(currentYear);
+
+	/* =======================
+	   FUNZIONI DI SUPPORTO
+	======================= */
+	getLast10YearsMap: (currentYear = moment().year()) => {
 		let years = [];
 		for (let i = 0; i < 10; i++) {
-			let year = currentYear - i;
-			years.push({
-				"anno": year.toString(),
-				"value": year
-			});
+			const year = currentYear - i;
+			years.push({ anno: year.toString(), value: year });
 		}
-		console.log(years)
 		return years;
 	},
+
 	aggiornaFiltroTabella: () => {
 		this.filtraPerNomeUtente = soloUtenteCorrente.isSwitchedOn;
 		getDatiVarDistrettoPeriodo.run();
 	},
-	getConvenzionatoDescFromId: (id) => {
+
+	getConvenzionatoDescFromId: id => {
 		const conv = this.allConvenzionatiMap[id];
-		return "(" + conv.CI + ") " + conv.COGNOME + " " + conv.NOME + " - [" + conv.RAPPORTO + "]";
+		return `(${conv.CI}) ${conv.COGNOME} ${conv.NOME} - [${conv.RAPPORTO}]`;
 	},
+
 	dataCompetenzaCongrua: () => {
-		let dataPeriodo = moment({year: this.periodo.anno, month: this.periodo.mese, day: 1});
-		let dataCompetenza = moment({year: annoCompetenza.selectedOptionValue, month: meseCompetenza.selectedOptionValue, day: 1});
+		const dataPeriodo = moment({ year: this.periodo.anno, month: this.periodo.mese, day: 1 });
+		const dataCompetenza = moment({
+			year: annoCompetenza.selectedOptionValue,
+			month: meseCompetenza.selectedOptionValue,
+			day: 1
+		});
 		return dataCompetenza.isSameOrBefore(dataPeriodo);
 	},
-	getMesiMap: () => {
-		let mesi = this.getMesi();
-		let out = [];
-		let i = 1;
-		for (let mese of mesi) {
-			out.push({"mese": mesi[i-1], "value": i})
-			i++;
-		}
-		console.log(out);
-		return out;
+
+	getMesi: () =>
+		"Gennaio_Febbraio_Marzo_Aprile_Maggio_Giugno_Luglio_Agosto_Settembre_Ottobre_Novembre_Dicembre".split(
+			"_"
+		),
+
+	getMesiMap: function () {
+		return this.getMesi().map((m, i) => ({ mese: m, value: i + 1 }));
 	},
-	getMesi: () => {
-		return 'Gennaio_Febbraio_Marzo_Aprile_Maggio_Giugno_Luglio_Agosto_Settembre_Ottobre_Novembre_Dicembre'.split('_');
+
+	getMeseItaliano: function (mese) {
+		return this.getMesi()[mese - 1];
 	},
-	getMeseItaliano: (mese) => {
-		let mesi = this.getMesi();
-		return mesi[mese-1];
-	},
-	getVariabiliDistretto: () => {
+
+	/* =======================
+	   LOAD DATI DISTRETTO
+	======================= */
+	async getVariabiliDistretto() {
 		this.allVariabiliMap = {};
-		let variabili = getVariabiliDistretto.run().then( () => {
-			for (let variabile of getVariabiliDistretto.data) {
-				this.allVariabiliMap[variabile['#']] = variabile;
-			}
+		await getVariabiliDistretto.run();
+		getVariabiliDistretto.data.forEach(v => {
+			this.allVariabiliMap[v["#"]] = v;
 		});
 	},
-	getConvenzionatiMap: () => {
+
+	async getConvenzionatiMap() {
 		this.allConvenzionatiMap = {};
-		let convenzionati = getAllConvenzionati.run().then( () => {
-			for (let convenzionato of getAllConvenzionati.data) {
-				this.allConvenzionatiMap[convenzionato['CI']] = convenzionato;
-			}
+		await getAllConvenzionati.run();
+		getAllConvenzionati.data.forEach(c => {
+			this.allConvenzionatiMap[c["CI"]] = c;
 		});
 	},
-	getPeriodo: () => {
-		let periodo = getPeriodo.data;
-		console.log(periodo);
-		this.periodo = periodo.length === 0 ||  periodo.length >1  ? null : periodo[0];
+
+	async getPeriodo() {
+		// se serve aggiornare il dataset, decommenta:
+		await getPeriodo.run();
+		const periodo = getPeriodo.data;
+		this.periodo = periodo.length === 1 ? periodo[0] : null;
 	},
-	getDistrettiMap: () => {
-		let distretti = getAllDistretti.data;
-		if (!distretti || distretti.length === 0)
-			console.log("NO DISTRETTI");
-		for (let distretto of distretti) {
-			this.distrettiMap.byUnique[distretto.unique] = distretto;
-			this.distrettiMap.byId[distretto.old_code] = distretto;
-		}
+
+	async getDistrettiMap() {
+		// se serve aggiornare il dataset, decommenta:
+		// await getAllDistretti.run();
+		const distretti = getAllDistretti.data || [];
+		distretti.forEach(d => {
+			this.distrettiMap.byUnique[d.unique] = d;
+			this.distrettiMap.byId[d.old_code] = d;
+		});
 	},
-	getMd5: (data) => {
-		return crypto_js.MD5(data).toString();
+
+	/* =======================
+	   DISTRETTI UTENTE
+	======================= */
+	getDistrettiFromIds(distrettiString, separator = ",") {
+		const ids = distrettiString.split(separator);
+		return ids.reduce((acc, id) => {
+			const d = this.distrettiMap.byUnique[id];
+			if (d) acc[d.old_code] = d.descrizione;
+			return acc;
+		}, {});
 	},
-	getDistrettiFromIds: (distrettiString, separator = ",") => {
-		let tempMap = {};
-		let distretti = distrettiString.split(separator);
-		for (let distretto of distretti) {
-			console.log(distretto);
-			tempMap[this.distrettiMap.byUnique[distretto].old_code] = 
-				this.distrettiMap.byUnique[distretto].descrizione;
-		}
-		return tempMap;
-	},
-	cambiaDistrettoSelezionato: () => {
+
+	async cambiaDistrettoSelezionato() {
 		this.userData.codDistretto = distrettoSelezionatoCmb.selectedOptionValue.toString();
-		this.userData.distretto = this.distrettiMap.byId[parseInt(distrettoSelezionatoCmb.selectedOptionValue)]['unique'];
-		this.userData.distrettoTxt = this.distrettiMap.byId[this.userData.codDistretto].descrizione;
+		this.userData.distretto =
+			this.distrettiMap.byId[parseInt(distrettoSelezionatoCmb.selectedOptionValue)].unique;
+		this.userData.distrettoTxt =
+			this.distrettiMap.byId[this.userData.codDistretto].descrizione;
 		this.distrettoCambiato = true;
 		closeModal(modalCambioDistretto.name);
-		this.initLoad();
+		await this.initLoad();
 	},
-	getDistrettiPossibiliMap: () => {
-		let arrayDistretti = [];
-		let distretti = this.getDistrettiFromIds(this.userData.distrettoRaw);
-		for (let distretto in distretti) {
-			arrayDistretti.push({
-				"label": distretti[distretto],
-				"value":distretto
+
+	getDistrettiPossibiliMap() {
+		return Object.entries(this.getDistrettiFromIds(this.userData.distrettoRaw)).map(
+			([cod, desc]) => ({
+				label: desc,
+				value: cod
 			})
-		}
-		return arrayDistretti;
+		);
 	},
-	verifyTokenExpires: () => {
+
+	/* =======================
+	   TOKEN / SICUREZZA
+	======================= */
+	verifyTokenExpires() {
 		let expired = false;
-		//console.log(appsmith.store.token);
-		if (appsmith.store.token !== null) {
+
+		if (appsmith.store.token) {
 			try {
 				const decoded = jsonwebtoken.verify(appsmith.store.token, this.secret);
-				console.log("decoded:");
-				console.log(decoded);
-				let distretti = this.getDistrettiFromIds(decoded.data.id_distretto);
+
+				const distretti = this.getDistrettiFromIds(decoded.data.id_distretto);
 				this.userData = {
-					username: decoded.data.user, 
-					distretto: (!this.distrettoCambiato ? this.distrettiMap.byId[ Object.keys(distretti)[0]].unique : this.userData.distretto),
+					username: decoded.data.user,
 					livelloText: this.livelli[decoded.data.livello.toString()],
 					livello: decoded.data.livello,
 					mail: decoded.data.mail,
 					distrettoRaw: decoded.data.id_distretto,
-					codDistretto: parseInt((!this.distrettoCambiato ? parseInt(Object.keys(distretti)[0]) : this.userData.codDistretto)),
-					distrettoTxt: (!this.distrettoCambiato ? distretti[Object.keys(distretti)[0]] : this.userData.distrettoTxt)
-				}
-				const newToken = this.createToken({data: decoded.data});
-				console.log("new token");
-				console.log(newToken);
-				storeValue("token",newToken);
-				console.log("token ok");
+					// se non è stato cambiato distretto uso il primo, altrimenti mantengo quello selezionato
+					codDistretto: this.distrettoCambiato
+						? this.userData.codDistretto
+						: parseInt(Object.keys(distretti)[0]),
+					distretto: this.distrettoCambiato
+						? this.userData.distretto
+						: this.distrettiMap.byId[Object.keys(distretti)[0]].unique,
+					distrettoTxt: this.distrettoCambiato
+						? this.userData.distrettoTxt
+						: distretti[Object.keys(distretti)[0]]
+				};
+
+				const newToken = this.createToken({ data: decoded.data });
+				storeValue("token", newToken);
 			} catch (err) {
-				console.log("ERRORE")
-				console.log(err);
+				console.error("Token non valido o scaduto:", err);
 				expired = true;
 			}
-		}
-		else 
-			expired = true;
+		} else expired = true;
+
 		if (expired) {
-			storeValue("token",null);
-			//console.log("expired..");
-			navigateTo("GpsVar Login");
-			this.doLogout("Eseguire il login, sessione scaduta", "warn");
+			this.doLogout("Sessione scaduta, effettua di nuovo il login", "warning");
 		}
-		return {expired}
+		return { expired };
+	},
 
-	},
-	createToken: (user) => {
-		return jsonwebtoken.sign(user, this.secret, {expiresIn: 60*60});
-	},
-	doReport: () => {
-		this.scaricaCSV();
-	},
-	generaCSV: () => {
-		let mockData = getAllConvenzionati.data;
-		const csv = papaparse.unparse(mockData, {
-			header: true, // questa opzione è di default, ma puoi specificarla
-			delimiter: ";", // puoi cambiare il delimitatore se vuoi
-			newline: "\r\n"
-		});
+	createToken: user => jsonwebtoken.sign(user, this.secret, { expiresIn: 60 * 60 }),
 
-		// Ora "csv" è una stringa CSV con la prima riga come header
-		return csv;
+	/* =======================
+	   CSV & PDF
+	======================= */
+	generaCSV() {
+		const mockData = getAllConvenzionati.data;
+		return papaparse.unparse(mockData, { header: true, delimiter: ";", newline: "\r\n" });
 	},
-	getValoreCalcolato: (row) => {
-		console.log(row);
-		if (row["altri_valori"] &&  row["altri_valori"] !== "" )
-			return (parseFloat(row["valore"]) *  parseFloat(row["altri_valori"])).toString() + " (" + row["valore"] + " * " + row["altri_valori"] + ")";
-		else
-			return row["valore"]
-	},
-	scaricaCSV: () => {
-		const csv = this.generaCSV();
-		console.log(csv);
-		download(csv, "variabili.csv", "text/csv");
-	},
-	// Funzione per rimuovere una riga dall'array
-	removeRow(row) {
-		deleteFromRowIndex.run({ rowIndex: row.rowIndex}).then( () => {
-			getDatiVarDistrettoPeriodo.run();
-			showAlert("Riga eliminata, elenco aggiornato.", "info")
-		});
-	},
-	competenzaToString: (comp = "2025_04") => {
-		let splitted = comp.split("_");
-		console.log(splitted);
-		return this.getMesi()[parseInt(splitted[1])] + " " + splitted[0];
-	},
-	aggiungiVariabile: () => {
-		if (!variabileSelezionata.selectedOptionValue || !convenzionatoSelezionato.selectedOptionValue || !importoVariabile.text || importoVariabile.text === ""|| parseFloat(importoVariabile.text) === 0.0) 
-			showAlert("Selezionare il convenzionato, il tipo di variabile e l'importo")
-		else {
-			aggiungiVariabile.setDisabled(true);
-			getVarVocePeriodoConv.run().then(() => {
-				if (getVarVocePeriodoConv.data.length === 0) {
-					statusTxt.setText("Caricamento in corso.. attendere");
 
-					aggiungiDatiVariabile.run().then( () => {
-						getDatiVarDistrettoPeriodo.run();
-						convenzionatoSelezionato.setSelectedOption("");
-						variabileSelezionata.setSelectedOption("");
-						importoVariabile.setValue("");
-						altriDati.setValue("");
-						statusTxt.setText("");
-						meseCompetenza.setSelectedOption(this.periodo.mese);
-						annoCompetenza.setSelectedOption(this.periodo.anno);
-						showAlert("Variabile inserita correttamente","info");
-					})
-				}
-				else {
-					showAlert("ERRORE! Esiste già lo stesso tipo di variabile per il convenzionato selezionato. Se il valore non è corretto è necessario eliminare quella già presente e reinserirla.","error");
-					statusTxt.setText("");
-					aggiungiVariabile.setDisabled(!convenzionatoSelezionato.selectedOptionValue || !variabileSelezionata.selectedOptionValue || !importoVariabile.text || importoVariabile.text=== "" || !homeFunctions.periodo || (altriDati.isVisible && (altriDati.text === "" || !altriDati.text)));
-				}
-			});
-		}
+	scaricaCSV() {
+		download(this.generaCSV(), "variabili.csv", "text/csv");
 	},
-	reportDistrettoPDF: () => {
-		let dati = getDatiVarDistrettoPeriodo.data;
 
-		// Crea il documento
+	getValoreCalcolato(row) {
+		if (row.altri_valori && row.altri_valori !== "")
+			return (
+				parseFloat(row.valore) * parseFloat(row.altri_valori) +
+				` (${row.valore} * ${row.altri_valori})`
+			);
+		return row.valore;
+	},
+
+	competenzaToString(comp = "2025_04") {
+		const [anno, mese] = comp.split("_");
+		return `${this.getMeseItaliano(parseInt(mese))} ${anno}`;
+	},
+
+	async reportDistrettoPDF() {
+		const dati = getDatiVarDistrettoPeriodo.data;
 		const doc = jspdf.jsPDF();
 
-		// Calcola dimensioni e posizione del logo (in alto a destra)
-		const logoWidth = 40;  // Larghezza in mm
-		const logoHeight = (logoWidth * 100) / 185; // Mantiene proporzioni 185x100
-		const logoX = 210 - logoWidth - 10; // Posizione X (margine destro di 10mm)
-		const logoY = 10; // Posizione Y (margine superiore)
+		/* LOGO */
+		const logoWidth = 40;
+		const logoHeight = (logoWidth * 100) / 185;
+		doc.addImage(resources.logoAsp, "PNG", 210 - logoWidth - 10, 10, logoWidth, logoHeight);
 
-		// Inserisci il logo dalla variabile base64
-		doc.addImage(resources.logoAsp, 'PNG', logoX, logoY, logoWidth, logoHeight);
-
-		// Titolo su 2 righe (spostato leggermente a sinistra per non sovrapporsi al logo)
+		/* TITOLI */
 		doc.setFontSize(18);
-		doc.setTextColor(40, 40, 40);
-		doc.text("Riepilogo variabili distretto", 80, 22, null, null, 'center');
-		doc.text(this.userData.distrettoTxt, 80, 30, null, null, 'center');
+		doc.text("Riepilogo variabili distretto", 80, 22, null, null, "center");
+		doc.text(this.userData.distrettoTxt, 80, 30, null, null, "center");
 
-		// Data
 		doc.setFontSize(9);
 		doc.setTextColor(100);
-		doc.text("Generato il " + moment().format("DD/MM/YYYY HH:mm"), 80, 35, null, null, 'center');
+		doc.text(`Generato il ${moment().format("DD/MM/YYYY HH:mm")}`, 80, 35, null, null, "center");
 
-		// Raggruppa per convenzionato (id_conv)
-		const grouped = {};
-		dati.forEach(item => {
-			if (!grouped[item.id_conv]) grouped[item.id_conv] = [];
-			grouped[item.id_conv].push(item);
-		});
+		/* RAGGRUPPAMENTO DATI */
+		const grouped = dati.reduce((acc, el) => {
+			if (!acc[el.id_conv]) acc[el.id_conv] = [];
+			acc[el.id_conv].push(el);
+			return acc;
+		}, {});
 
-		// Ordina per convenzionato
-		const convenzionati = Object.keys(grouped).sort((a, b) => a - b);
-
-		let finalData = [];
-		convenzionati.forEach(id_conv => {
-			// Intestazione convenzionato (senza la parola "Convenzionato:", in grassetto)
-			finalData.push([
-				{content: `${this.getConvenzionatoDescFromId(id_conv)}`, colSpan: 5, styles: { halign: 'left', fillColor: [220, 220, 220], fontStyle: 'bold' }}
-			]);
-			// Intestazione colonne (font più piccolo)
-			finalData.push([
-				{content: 'Voce', styles: { fontSize: 8, fontStyle: 'bold' }},
-				{content: 'Competenza', styles: { fontSize: 8, fontStyle: 'bold' }},
-				{content: 'Valore', styles: { fontSize: 8, fontStyle: 'bold' }},
-				{content: 'Utente', styles: { fontSize: 8, fontStyle: 'bold' }},
-				{content: 'Data Ora', styles: { fontSize: 8, fontStyle: 'bold' }}
-			]);
-			// Dati
-			grouped[id_conv].forEach(item => {
+		const finalData = [];
+		Object.keys(grouped)
+			.sort((a, b) => a - b)
+			.forEach(id_conv => {
 				finalData.push([
-					this.allVariabiliMap[item.voce]['DESCRIZIONE'],
-					this.competenzaToString(item.competenza),
-					this.getValoreCalcolato(item),
-					item.utente,
-					item.data_ora
+					{
+						content: this.getConvenzionatoDescFromId(id_conv),
+						colSpan: 5,
+						styles: { halign: "left", fillColor: [220, 220, 220], fontStyle: "bold" }
+					}
 				]);
+				finalData.push([
+					{ content: "Voce", styles: { fontSize: 8, fontStyle: "bold" } },
+					{ content: "Competenza", styles: { fontSize: 8, fontStyle: "bold" } },
+					{ content: "Valore", styles: { fontSize: 8, fontStyle: "bold" } },
+					{ content: "Utente", styles: { fontSize: 8, fontStyle: "bold" } },
+					{ content: "Data Ora", styles: { fontSize: 8, fontStyle: "bold" } }
+				]);
+				grouped[id_conv].forEach(item => {
+					finalData.push([
+						this.allVariabiliMap[item.voce].DESCRIZIONE,
+						this.competenzaToString(item.competenza),
+						this.getValoreCalcolato(item),
+						item.utente,
+						item.data_ora
+					]);
+				});
 			});
-		});
 
-		// Tabella (startY aumentato per lasciare spazio al logo)
 		jspdf_autotable.autoTable(doc, {
 			body: finalData,
 			startY: 45,
-			theme: 'grid',
+			theme: "grid",
 			styles: { fontSize: 10 },
 			headStyles: { fillColor: [0, 0, 128] },
-			didDrawPage: function (data) {
-				// Numero pagina
+			didDrawPage: data => {
 				const pageCount = doc.internal.getNumberOfPages();
 				doc.setFontSize(10);
 				doc.text(`Pagina ${data.pageNumber} di ${pageCount}`, 200 - 30, 290);
 			}
 		});
 
-		// Aggiunge la firma in basso a destra
-		const pageHeight = doc.internal.pageSize.height;
-		const pageWidth = doc.internal.pageSize.width;
-
-		// Posizione per "Il responsabile"
-		const firmaX = pageWidth - 60; // 60mm dal margine destro
-		const firmaY = pageHeight - 30; // 30mm dal fondo
-
-		// Testo "Il responsabile"
+		/* FIRMA */
+		const firmaX = doc.internal.pageSize.width - 60;
+		const firmaY = doc.internal.pageSize.height - 30;
 		doc.setFontSize(12);
-		doc.setTextColor(0, 0, 0);
 		doc.text("Il responsabile", firmaX, firmaY);
+		doc.line(firmaX, firmaY + 10, firmaX + 50, firmaY + 10);
 
-		// Linea orizzontale per la firma (sotto il testo)
-		const lineaY = firmaY + 10; // 10mm sotto il testo
-		const lineaLunghezza = 50; // 50mm di lunghezza
-		doc.line(firmaX, lineaY, firmaX + lineaLunghezza, lineaY);
-
-		// Salva o restituisci il PDF
 		return doc.output("dataurlstring");
+	},
+
+	/* =======================
+	   CRUD VARIABILI
+	======================= */
+	async removeRow(row) {
+		await deleteFromRowIndex.run({ rowIndex: row.rowIndex });
+		await getDatiVarDistrettoPeriodo.run();
+		showAlert("Riga eliminata, elenco aggiornato.", "info");
+	},
+
+	async aggiungiVariabile() {
+		if (
+			!variabileSelezionata.selectedOptionValue ||
+			!convenzionatoSelezionato.selectedOptionValue ||
+			!importoVariabile.text ||
+			parseFloat(importoVariabile.text) === 0.0
+		) {
+			showAlert("Selezionare il convenzionato, il tipo di variabile e l'importo");
+			return;
+		}
+
+		aggiungiVariabile.setDisabled(true);
+
+		await getVarVocePeriodoConv.run();
+		if (getVarVocePeriodoConv.data.length !== 0) {
+			showAlert(
+				"ERRORE! Esiste già lo stesso tipo di variabile per il convenzionato selezionato.",
+				"error"
+			);
+			statusTxt.setText("");
+			aggiungiVariabile.setDisabled(
+				!convenzionatoSelezionato.selectedOptionValue ||
+					!variabileSelezionata.selectedOptionValue ||
+					!importoVariabile.text
+			);
+			return;
+		}
+
+		statusTxt.setText("Caricamento in corso... attendere");
+		await aggiungiDatiVariabile.run();
+		await getDatiVarDistrettoPeriodo.run();
+
+		/* reset form */
+		[convenzionatoSelezionato, variabileSelezionata].forEach(cmb => cmb.setSelectedOption(""));
+		[importoVariabile, altriDati].forEach(inp => inp.setValue(""));
+		meseCompetenza.setSelectedOption(this.periodo.mese);
+		annoCompetenza.setSelectedOption(this.periodo.anno);
+
+		statusTxt.setText("");
+		showAlert("Variabile inserita correttamente", "info");
 	}
-}
+};

@@ -9,7 +9,7 @@
       "jsArguments": [
         {
           "name": "currentYear",
-          "value": "{{moment().get(\"year\")}}"
+          "value": "{{moment().year()}}"
         }
       ],
       "paginationType": "NONE",

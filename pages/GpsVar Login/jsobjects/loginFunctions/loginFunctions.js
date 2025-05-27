@@ -36,6 +36,7 @@ export default {
 	},
 
 	signIn: async (userNonNecessarioNelDominio = false) => {
+		showAlert("login in corso..","info");
 		let internal = null;
 		let user = (await getUserFromIdAndDomain.run());
 		let error = "";
@@ -70,7 +71,6 @@ export default {
 				error = 'Combinazione email/password non valida';
 		}
 		if (loginOk) {
-			showAlert("Login ok, accesso in corso..","success");
 			storeValue("token",this.createToken({data: user}));
 			navigateTo("Home");
 		}

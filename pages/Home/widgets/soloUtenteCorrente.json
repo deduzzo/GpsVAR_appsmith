@@ -42,7 +42,7 @@
   "mobileTopRow": 26,
   "needsErrorInfo": false,
   "onChange": "{{ homeFunctions.aggiornaFiltroTabella()}}",
-  "originalBottomRow": 31,
+  "originalBottomRow": 30,
   "originalTopRow": 26,
   "parentColumnSpace": 20.25,
   "parentId": "0",
