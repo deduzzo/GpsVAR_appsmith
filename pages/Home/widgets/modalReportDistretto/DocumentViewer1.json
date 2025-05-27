@@ -1,7 +1,7 @@
 {
   "animateLoading": true,
   "bottomRow": 60,
-  "docUrl": "{{homeFunctions.reportDistrettoPDF()}}",
+  "docUrl": "{{ homeFunctions.reportDistrettoPDF()}}",
   "dynamicBindingPathList": [
     {
       "key": "docUrl"

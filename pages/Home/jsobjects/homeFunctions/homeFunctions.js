@@ -232,7 +232,7 @@ export default {
 		return `${this.getMeseItaliano(parseInt(mese))} ${anno}`;
 	},
 
-	async reportDistrettoPDF() {
+	reportDistrettoPDF() {
 		const dati = getDatiVarDistrettoPeriodo.data;
 		const doc = jspdf.jsPDF();
 
@@ -305,8 +305,17 @@ export default {
 		doc.setFontSize(12);
 		doc.text("Il responsabile", firmaX, firmaY);
 		doc.line(firmaX, firmaY + 10, firmaX + 50, firmaY + 10);
+		// Genera il nome del file con data e ora corrente
+    const timestamp = moment().format("YYYY-MM-DD_HH-mm");
+    const filename = `report-${timestamp}.pdf`;
+		
+				// Salva o restituisci il PDF
+		let dataURL = doc.output("dataurlstring");
+		// Aggiungi il nome del file come parametro all'URL
+    //dataURL += "&filename=" + encodeURIComponent(filename);
 
-		return doc.output("dataurlstring");
+    // Restituisci il data URL modificato
+    return dataURL;
 	},
 
 	/* =======================
