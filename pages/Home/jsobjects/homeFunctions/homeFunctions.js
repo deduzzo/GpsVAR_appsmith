@@ -158,8 +158,8 @@ export default {
 		if (expired) {
 			storeValue("token",null);
 			//console.log("expired..");
-			navigateTo("LoginPage");
-			showAlert("asd");
+			navigateTo("GpsVar Login");
+			//showAlert("asd");
 		}
 		return {expired}
 
