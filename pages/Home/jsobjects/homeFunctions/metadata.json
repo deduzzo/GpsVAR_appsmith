@@ -16,6 +16,10 @@
         "value": "null"
       },
       {
+        "name": "distrettoCambiato",
+        "value": "false"
+      },
+      {
         "name": "secret",
         "value": "\"UxZ>69'[Tu<6\""
       },

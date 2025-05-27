@@ -6,6 +6,7 @@ export default {
 		"3": "Amministratore"
 	},
 	userData: null,
+	distrettoCambiato: false,
 	secret: "UxZ>69'[Tu<6",
 	distrettiMap: {byUnique: {}, byId: {}},
 	periodo: null,
@@ -93,6 +94,35 @@ export default {
 	getMd5: (data) => {
 		return crypto_js.MD5(data).toString();
 	},
+	getDistrettiFromIds: (distrettiString, separator = ",") => {
+		let tempMap = {};
+		let distretti = distrettiString.split(separator);
+		for (let distretto of distretti) {
+			console.log(distretto);
+			tempMap[this.distrettiMap.byUnique[distretto].old_code] = 
+				this.distrettiMap.byUnique[distretto].descrizione;
+		}
+		return tempMap;
+	},
+	cambiaDistrettoSelezionato: () => {
+		this.userData.codDistretto = distrettoSelezionatoCmb.selectedOptionValue.toString();
+		this.userData.distretto = this.distrettiMap.byId[parseInt(distrettoSelezionatoCmb.selectedOptionValue)]['unique'];
+		this.userData.distrettoTxt = this.distrettiMap.byId[this.userData.codDistretto].descrizione;
+		this.distrettoCambiato = true;
+		closeModal(modalCambioDistretto.name);
+		this.initLoad();
+	},
+	getDistrettiPossibiliMap: () => {
+		let arrayDistretti = [];
+		let distretti = this.getDistrettiFromIds(this.userData.distrettoRaw);
+		for (let distretto in distretti) {
+			arrayDistretti.push({
+				"label": distretti[distretto],
+				"value":distretto
+			})
+		}
+		return arrayDistretti;
+	},
 	verifyTokenExpires: () => {
 		let expired = false;
 		//console.log(appsmith.store.token);
@@ -101,14 +131,16 @@ export default {
 				const decoded = jsonwebtoken.verify(appsmith.store.token, this.secret);
 				console.log("decoded:");
 				console.log(decoded);
+				let distretti = this.getDistrettiFromIds(decoded.data.id_distretto);
 				this.userData = {
 					username: decoded.data.user, 
-					distretto: decoded.data.id_distretto,
+					distretto: (!this.distrettoCambiato ? this.distrettiMap.byId[ Object.keys(distretti)[0]].unique : this.userData.distretto),
 					livelloText: this.livelli[decoded.data.livello.toString()],
 					livello: decoded.data.livello,
 					mail: decoded.data.mail,
-					codDistretto: this.distrettiMap.byUnique[decoded.data.id_distretto].old_code,
-					distrettoTxt: this.distrettiMap.byUnique[decoded.data.id_distretto].descrizione
+					distrettoRaw: decoded.data.id_distretto,
+					codDistretto: parseInt((!this.distrettoCambiato ? parseInt(Object.keys(distretti)[0]) : this.userData.codDistretto)),
+					distrettoTxt: (!this.distrettoCambiato ? distretti[Object.keys(distretti)[0]] : this.userData.distrettoTxt)
 				}
 				const newToken = this.createToken({data: decoded.data});
 				console.log("new token");
@@ -203,101 +235,101 @@ export default {
 		}
 	},
 	reportDistrettoPDF: () => {
-    let dati = getDatiVarDistrettoPeriodo.data;
+		let dati = getDatiVarDistrettoPeriodo.data;
 
-    // Crea il documento
-    const doc = jspdf.jsPDF();
+		// Crea il documento
+		const doc = jspdf.jsPDF();
 
-    // Calcola dimensioni e posizione del logo (in alto a destra)
-    const logoWidth = 40;  // Larghezza in mm
-    const logoHeight = (logoWidth * 100) / 185; // Mantiene proporzioni 185x100
-    const logoX = 210 - logoWidth - 10; // Posizione X (margine destro di 10mm)
-    const logoY = 10; // Posizione Y (margine superiore)
+		// Calcola dimensioni e posizione del logo (in alto a destra)
+		const logoWidth = 40;  // Larghezza in mm
+		const logoHeight = (logoWidth * 100) / 185; // Mantiene proporzioni 185x100
+		const logoX = 210 - logoWidth - 10; // Posizione X (margine destro di 10mm)
+		const logoY = 10; // Posizione Y (margine superiore)
 
-    // Inserisci il logo dalla variabile base64
-    doc.addImage(resources.logoAsp, 'PNG', logoX, logoY, logoWidth, logoHeight);
+		// Inserisci il logo dalla variabile base64
+		doc.addImage(resources.logoAsp, 'PNG', logoX, logoY, logoWidth, logoHeight);
 
-// Titolo su 2 righe (spostato leggermente a sinistra per non sovrapporsi al logo)
-doc.setFontSize(18);
-doc.setTextColor(40, 40, 40);
-doc.text("Riepilogo variabili specialistica", 80, 22, null, null, 'center');
-doc.text(this.userData.distrettoTxt, 80, 30, null, null, 'center');
+		// Titolo su 2 righe (spostato leggermente a sinistra per non sovrapporsi al logo)
+		doc.setFontSize(18);
+		doc.setTextColor(40, 40, 40);
+		doc.text("Riepilogo variabili specialistica", 80, 22, null, null, 'center');
+		doc.text(this.userData.distrettoTxt, 80, 30, null, null, 'center');
 
-// Data
-doc.setFontSize(9);
-doc.setTextColor(100);
-doc.text("Generato il " + moment().format("DD/MM/YYYY HH:mm"), 80, 35, null, null, 'center');
+		// Data
+		doc.setFontSize(9);
+		doc.setTextColor(100);
+		doc.text("Generato il " + moment().format("DD/MM/YYYY HH:mm"), 80, 35, null, null, 'center');
 
-    // Raggruppa per convenzionato (id_conv)
-    const grouped = {};
-    dati.forEach(item => {
-        if (!grouped[item.id_conv]) grouped[item.id_conv] = [];
-        grouped[item.id_conv].push(item);
-    });
+		// Raggruppa per convenzionato (id_conv)
+		const grouped = {};
+		dati.forEach(item => {
+			if (!grouped[item.id_conv]) grouped[item.id_conv] = [];
+			grouped[item.id_conv].push(item);
+		});
 
-    // Ordina per convenzionato
-    const convenzionati = Object.keys(grouped).sort((a, b) => a - b);
+		// Ordina per convenzionato
+		const convenzionati = Object.keys(grouped).sort((a, b) => a - b);
 
-    let finalData = [];
-    convenzionati.forEach(id_conv => {
-        // Intestazione convenzionato (senza la parola "Convenzionato:", in grassetto)
-        finalData.push([
-            {content: `${this.getConvenzionatoDescFromId(id_conv)}`, colSpan: 5, styles: { halign: 'left', fillColor: [220, 220, 220], fontStyle: 'bold' }}
-        ]);
-        // Intestazione colonne (font più piccolo)
-        finalData.push([
-            {content: 'Voce', styles: { fontSize: 8, fontStyle: 'bold' }},
-            {content: 'Competenza', styles: { fontSize: 8, fontStyle: 'bold' }},
-            {content: 'Valore', styles: { fontSize: 8, fontStyle: 'bold' }},
-            {content: 'Utente', styles: { fontSize: 8, fontStyle: 'bold' }},
-            {content: 'Data Ora', styles: { fontSize: 8, fontStyle: 'bold' }}
-        ]);
-        // Dati
-        grouped[id_conv].forEach(item => {
-            finalData.push([
-                this.allVariabiliMap[item.voce]['DESCRIZIONE'],
-                this.competenzaToString(item.competenza),
-                this.getValoreCalcolato(item),
-                item.utente,
-                item.data_ora
-            ]);
-        });
-    });
+		let finalData = [];
+		convenzionati.forEach(id_conv => {
+			// Intestazione convenzionato (senza la parola "Convenzionato:", in grassetto)
+			finalData.push([
+				{content: `${this.getConvenzionatoDescFromId(id_conv)}`, colSpan: 5, styles: { halign: 'left', fillColor: [220, 220, 220], fontStyle: 'bold' }}
+			]);
+			// Intestazione colonne (font più piccolo)
+			finalData.push([
+				{content: 'Voce', styles: { fontSize: 8, fontStyle: 'bold' }},
+				{content: 'Competenza', styles: { fontSize: 8, fontStyle: 'bold' }},
+				{content: 'Valore', styles: { fontSize: 8, fontStyle: 'bold' }},
+				{content: 'Utente', styles: { fontSize: 8, fontStyle: 'bold' }},
+				{content: 'Data Ora', styles: { fontSize: 8, fontStyle: 'bold' }}
+			]);
+			// Dati
+			grouped[id_conv].forEach(item => {
+				finalData.push([
+					this.allVariabiliMap[item.voce]['DESCRIZIONE'],
+					this.competenzaToString(item.competenza),
+					this.getValoreCalcolato(item),
+					item.utente,
+					item.data_ora
+				]);
+			});
+		});
 
-    // Tabella (startY aumentato per lasciare spazio al logo)
-    jspdf_autotable.autoTable(doc, {
-        body: finalData,
-        startY: 45,
-        theme: 'grid',
-        styles: { fontSize: 10 },
-        headStyles: { fillColor: [0, 0, 128] },
-        didDrawPage: function (data) {
-            // Numero pagina
-            const pageCount = doc.internal.getNumberOfPages();
-            doc.setFontSize(10);
-            doc.text(`Pagina ${data.pageNumber} di ${pageCount}`, 200 - 30, 290);
-        }
-    });
+		// Tabella (startY aumentato per lasciare spazio al logo)
+		jspdf_autotable.autoTable(doc, {
+			body: finalData,
+			startY: 45,
+			theme: 'grid',
+			styles: { fontSize: 10 },
+			headStyles: { fillColor: [0, 0, 128] },
+			didDrawPage: function (data) {
+				// Numero pagina
+				const pageCount = doc.internal.getNumberOfPages();
+				doc.setFontSize(10);
+				doc.text(`Pagina ${data.pageNumber} di ${pageCount}`, 200 - 30, 290);
+			}
+		});
 
-    // Aggiunge la firma in basso a destra
-    const pageHeight = doc.internal.pageSize.height;
-    const pageWidth = doc.internal.pageSize.width;
-    
-    // Posizione per "Il responsabile"
-    const firmaX = pageWidth - 60; // 60mm dal margine destro
-    const firmaY = pageHeight - 30; // 30mm dal fondo
-    
-    // Testo "Il responsabile"
-    doc.setFontSize(12);
-    doc.setTextColor(0, 0, 0);
-    doc.text("Il responsabile", firmaX, firmaY);
-    
-    // Linea orizzontale per la firma (sotto il testo)
-    const lineaY = firmaY + 10; // 10mm sotto il testo
-    const lineaLunghezza = 50; // 50mm di lunghezza
-    doc.line(firmaX, lineaY, firmaX + lineaLunghezza, lineaY);
+		// Aggiunge la firma in basso a destra
+		const pageHeight = doc.internal.pageSize.height;
+		const pageWidth = doc.internal.pageSize.width;
 
-    // Salva o restituisci il PDF
-    return doc.output("dataurlstring");
-}
+		// Posizione per "Il responsabile"
+		const firmaX = pageWidth - 60; // 60mm dal margine destro
+		const firmaY = pageHeight - 30; // 30mm dal fondo
+
+		// Testo "Il responsabile"
+		doc.setFontSize(12);
+		doc.setTextColor(0, 0, 0);
+		doc.text("Il responsabile", firmaX, firmaY);
+
+		// Linea orizzontale per la firma (sotto il testo)
+		const lineaY = firmaY + 10; // 10mm sotto il testo
+		const lineaLunghezza = 50; // 50mm di lunghezza
+		doc.line(firmaX, lineaY, firmaX + lineaLunghezza, lineaY);
+
+		// Salva o restituisci il PDF
+		return doc.output("dataurlstring");
+	}
 }

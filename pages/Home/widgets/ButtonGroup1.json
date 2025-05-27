@@ -49,6 +49,9 @@
     },
     {
       "key": "groupButtons.groupButtonezzecblo8e.menuItems.menuItemfl5urg45l0.onClick"
+    },
+    {
+      "key": "groupButtons.groupButton2.menuItems.menuItem0i6symxlfp.onClick"
     }
   ],
   "groupButtons": {
@@ -68,7 +71,7 @@
     },
     "groupButton2": {
       "buttonColor": "{{appsmith.theme.colors.primaryColor}}",
-      "buttonType": "SIMPLE",
+      "buttonType": "MENU",
       "disabledWhenInvalid": false,
       "iconName": "office",
       "id": "groupButton2",
@@ -76,7 +79,18 @@
       "isDisabled": false,
       "isVisible": true,
       "label": "Distretto: {{ homeFunctions.userData.distrettoTxt }}",
-      "menuItems": {},
+      "menuItems": {
+        "menuItem0i6symxlfp": {
+          "iconName": "changes",
+          "id": "menuItem0i6symxlfp",
+          "index": 0,
+          "isDisabled": false,
+          "isVisible": true,
+          "label": "Cambia",
+          "onClick": "{{showModal(modalCambioDistretto.name);}}",
+          "widgetId": "ppf1hpihwj"
+        }
+      },
       "placement": "CENTER",
       "widgetId": ""
     },
