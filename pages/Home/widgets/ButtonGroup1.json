@@ -171,6 +171,15 @@
           "textColor": "#fef9c3",
           "widgetId": "dro15j3voz"
         },
+        "menuItemd5a6jj4yv9": {
+          "iconName": "refresh",
+          "id": "menuItemd5a6jj4yv9",
+          "index": 2,
+          "isDisabled": false,
+          "isVisible": true,
+          "label": "Aggiorna dati...",
+          "widgetId": "ary1ue8vhj"
+        },
         "menuItemfl5urg45l0": {
           "backgroundColor": "{{appsmith.theme.colors.primaryColor}}",
           "iconColor": "#fef9c3",
@@ -179,7 +188,7 @@
           "index": 0,
           "isDisabled": false,
           "isVisible": true,
-          "label": "Scarica Report distretto",
+          "label": "Scarica Report",
           "onClick": "{{homeFunctions.reportDistrettoPDF();\nshowModal(modalReportDistretto.name);}}",
           "textColor": "#fef9c3",
           "widgetId": "mtfcpbtkyb"

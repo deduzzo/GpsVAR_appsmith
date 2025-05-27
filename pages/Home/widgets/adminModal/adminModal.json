@@ -1,7 +1,7 @@
 {
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 296,
+  "bottomRow": 24,
   "boxShadow": "none",
   "canEscapeKeyClose": true,
   "canOutsideClickClose": true,
@@ -64,6 +64,7 @@
   "leftColumn": 38,
   "maxDynamicHeight": 9000,
   "minDynamicHeight": 24,
+  "minHeight": 240,
   "mobileBottomRow": 80,
   "mobileLeftColumn": 38,
   "mobileRightColumn": 62,
@@ -80,5 +81,5 @@
   "version": 2,
   "widgetId": "foypvzhk43",
   "widgetName": "adminModal",
-  "width": 456
+  "width": 590
 }

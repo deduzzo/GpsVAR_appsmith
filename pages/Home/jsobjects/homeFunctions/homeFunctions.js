@@ -191,7 +191,7 @@ export default {
 	scaricaCSV: () => {
 		const csv = this.generaCSV();
 		console.log(csv);
-		download(csv, "assistiti.csv", "text/csv");
+		download(csv, "variabili.csv", "text/csv");
 	},
 	// Funzione per rimuovere una riga dall'array
 	removeRow(row) {
