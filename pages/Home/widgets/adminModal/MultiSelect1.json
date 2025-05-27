@@ -1,5 +1,6 @@
 {
   "accentColor": "{{appsmith.theme.colors.primaryColor}}",
+  "allowSelectAll": true,
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
   "bottomRow": 12,
@@ -29,7 +30,7 @@
   "isDisabled": false,
   "isFilterable": true,
   "isLoading": false,
-  "isRequired": false,
+  "isRequired": true,
   "isVisible": true,
   "key": "le3evun2cl",
   "labelAlignment": "left",

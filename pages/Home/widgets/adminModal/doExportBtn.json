@@ -34,7 +34,7 @@
   "mobileRightColumn": 63,
   "mobileTopRow": 18,
   "needsErrorInfo": false,
-  "onClick": "{{homeFunctions.doReport();}}",
+  "onClick": "{{homeFunctions.scaricaCSV();}}",
   "originalBottomRow": 22,
   "originalTopRow": 18,
   "parentId": "lt4iylkmzz",
