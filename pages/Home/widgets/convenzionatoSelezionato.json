@@ -60,7 +60,7 @@
   "responsiveBehavior": "fill",
   "rightColumn": 52,
   "serverSideFiltering": false,
-  "sourceData": "{{getAllConvenzionati.data.map( (obj) =>{ return  {'label': obj.COGNOME + \" \" + obj.NOME + \" - [\" + obj.RAPPORTO + \"]\", 'value': obj.CI } })}}",
+  "sourceData": "{{getAllConvenzionati.data.map( (obj) =>{ return  {'label': homeFunctions.getConvenzionatoDescFromId(obj.CI), 'value': obj.CI } })}}",
   "topRow": 7,
   "type": "SELECT_WIDGET",
   "version": 1,

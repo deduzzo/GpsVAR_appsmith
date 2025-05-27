@@ -41,6 +41,9 @@
   "dynamicPropertyPathList": [
     {
       "key": "groupButtons.groupButtonezzecblo8e.menuItems.menuItem3lu8z6dvro.isVisible"
+    },
+    {
+      "key": "groupButtons.groupButton1.menuItems.menuItemdosrhrn3k3.onClick"
     }
   ],
   "dynamicTriggerPathList": [
@@ -52,12 +55,15 @@
     },
     {
       "key": "groupButtons.groupButton2.menuItems.menuItem0i6symxlfp.onClick"
+    },
+    {
+      "key": "groupButtons.groupButton1.menuItems.menuItemdosrhrn3k3.onClick"
     }
   ],
   "groupButtons": {
     "groupButton1": {
       "buttonColor": "{{appsmith.theme.colors.primaryColor}}",
-      "buttonType": "SIMPLE",
+      "buttonType": "MENU",
       "disabledWhenInvalid": false,
       "iconName": "user",
       "id": "groupButton1",
@@ -65,7 +71,21 @@
       "isDisabled": false,
       "isVisible": true,
       "label": "Benvenuto {{homeFunctions.userData.username}}",
-      "menuItems": {},
+      "menuItems": {
+        "menuItemdosrhrn3k3": {
+          "backgroundColor": "#ef4444",
+          "iconColor": "#fef9c3",
+          "iconName": "log-out",
+          "id": "menuItemdosrhrn3k3",
+          "index": 0,
+          "isDisabled": false,
+          "isVisible": true,
+          "label": "Logout",
+          "onClick": "{{homeFunctions.doLogout(\"Logout effettuato correttamente\", \"info\")}}",
+          "textColor": "#fef9c3",
+          "widgetId": "e1sfmupllu"
+        }
+      },
       "placement": "CENTER",
       "widgetId": ""
     },

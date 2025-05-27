@@ -5,7 +5,10 @@ export default {
 	scope: "gpsvar",
 
 	init: () => {
-
+		if (appsmith.store.message && appsmith.store.message !== null) {
+			showAlert(appsmith.store.message.msg, appsmith.store.message.type);
+			storeValue("message", null);
+		}
 	},
 	setDefaultTab: (newTab) => {
 		this.defaultTab = newTab;

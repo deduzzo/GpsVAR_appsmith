@@ -21,6 +21,11 @@ export default {
 		this.getConvenzionatiMap();
 		getDatiVarDistrettoPeriodo.run();
 	},
+	doLogout: (msg = "Logout effettuato", type = "info") => {
+		storeValue("token",null);
+		storeValue("message", {msg:msg, type:type});
+		navigateTo("GpsVar Login");
+	},
 	getLast10YearsMap: (currentYear =  moment().get("year")) => {
 		console.log(currentYear);
 		let years = [];
@@ -36,7 +41,7 @@ export default {
 	},
 	getConvenzionatoDescFromId: (id) => {
 		const conv = this.allConvenzionatiMap[id];
-		return conv.COGNOME + " " + conv.NOME + " - [" + conv.RAPPORTO + "]";
+		return "(" + conv.CI + ") " + conv.COGNOME + " " + conv.NOME + " - [" + conv.RAPPORTO + "]";
 	},
 	dataCompetenzaCongrua: () => {
 		let dataPeriodo = moment({year: this.periodo.anno, month: this.periodo.mese, day: 1});
@@ -159,7 +164,7 @@ export default {
 			storeValue("token",null);
 			//console.log("expired..");
 			navigateTo("GpsVar Login");
-			//showAlert("asd");
+			this.doLogout("Eseguire il login, sessione scaduta", "warn");
 		}
 		return {expired}
 
@@ -252,7 +257,7 @@ export default {
 		// Titolo su 2 righe (spostato leggermente a sinistra per non sovrapporsi al logo)
 		doc.setFontSize(18);
 		doc.setTextColor(40, 40, 40);
-		doc.text("Riepilogo variabili specialistica", 80, 22, null, null, 'center');
+		doc.text("Riepilogo variabili distretto", 80, 22, null, null, 'center');
 		doc.text(this.userData.distrettoTxt, 80, 30, null, null, 'center');
 
 		// Data
