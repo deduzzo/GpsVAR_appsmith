@@ -13,6 +13,7 @@ export default {
 	variabiliInserite: [],
 	allVariabiliMap: {},
 	allConvenzionatiMap: {},
+	filtraPerNomeUtente: true,
 	async initLoad() {
 		this.getDistrettiMap();
 		this.verifyTokenExpires();
@@ -38,6 +39,10 @@ export default {
 		}
 		console.log(years)
 		return years;
+	},
+	aggiornaFiltroTabella: () => {
+		this.filtraPerNomeUtente = soloUtenteCorrente.isSwitchedOn;
+		getDatiVarDistrettoPeriodo.run();
 	},
 	getConvenzionatoDescFromId: (id) => {
 		const conv = this.allConvenzionatiMap[id];

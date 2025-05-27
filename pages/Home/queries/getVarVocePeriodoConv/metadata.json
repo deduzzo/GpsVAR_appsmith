@@ -51,6 +51,26 @@
           "data": "1"
         },
         "where": {
+          "componentData": {
+            "children": [
+              {
+                "condition": "EQ",
+                "key": "periodo",
+                "value": "{{ homeFunctions.periodo.anno + \"_\" + homeFunctions.periodo.mese}}"
+              },
+              {
+                "condition": "EQ",
+                "key": "id_conv",
+                "value": "{{ convenzionatoSelezionato.selectedOptionValue}}"
+              },
+              {
+                "condition": "EQ",
+                "key": "voce",
+                "value": "{{ variabileSelezionata.selectedOptionValue}}"
+              }
+            ],
+            "condition": "AND"
+          },
           "data": {
             "children": [
               {
@@ -70,7 +90,9 @@
               }
             ],
             "condition": "AND"
-          }
+          },
+          "jsonData": "",
+          "viewType": "component"
         }
       },
       "paginationType": "NONE",

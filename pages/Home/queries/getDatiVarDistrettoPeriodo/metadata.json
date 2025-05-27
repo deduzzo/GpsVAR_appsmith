@@ -52,7 +52,7 @@
           "data": "1"
         },
         "where": {
-          "data": {
+          "componentData": {
             "children": [
               {
                 "condition": "EQ",
@@ -71,7 +71,9 @@
               }
             ],
             "condition": "AND"
-          }
+          },
+          "data": "{\n\t\"condition\": \"AND\",\n\t\"children\": [\n\t\t{\n\t\t\t\"condition\": \"EQ\",\n\t\t\t\"key\": \"periodo\",\n\t\t\t\"value\": \"{{ homeFunctions.periodo.anno + \"_\" + homeFunctions.periodo.mese }}\"\n\t\t},\n\t\t{\n\t\t\t\"key\": \"distretto\",\n\t\t\t\"condition\": \"EQ\",\n\t\t\t\"value\": \"{{homeFunctions.userData.distretto}}\"\n\t\t},\n\t\t{\n\t\t\t\"key\": \"valido\",\n\t\t\t\"condition\": \"EQ\",\n\t\t\t\"value\": \"SI\"\n\t\t},\n    {{ homeFunctions.filtraPerNomeUtente ? {\n\t\t\t\"key\": \"utente\",\n\t\t\t\"condition\": \"EQ\",\n\t\t\t\"value\": homeFunctions.userData.username\n\t\t} : {} }}\n\t]\n}",
+          "viewType": "json"
         }
       },
       "paginationType": "NONE",
@@ -86,10 +88,7 @@
     },
     "dynamicBindingPathList": [
       {
-        "key": "formData.where.data.children[0].value"
-      },
-      {
-        "key": "formData.where.data.children[1].value"
+        "key": "formData.where.data"
       }
     ],
     "executeOnLoad": true,
