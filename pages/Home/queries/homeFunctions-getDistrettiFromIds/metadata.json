@@ -30,10 +30,10 @@
         "key": "body"
       }
     ],
-    "executeOnLoad": false,
     "fullyQualifiedName": "homeFunctions.getDistrettiFromIds",
     "name": "getDistrettiFromIds",
     "pageId": "Home",
+    "runBehaviour": "MANUAL",
     "userSetOnLoad": false
   }
 }

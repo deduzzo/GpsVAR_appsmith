@@ -99,10 +99,10 @@
         "key": "formData.where.data.children[3].value"
       }
     ],
-    "executeOnLoad": false,
     "fullyQualifiedName": "getUserFromIdAndDomain",
     "name": "getUserFromIdAndDomain",
     "pageId": "GpsVar Login",
+    "runBehaviour": "MANUAL",
     "userSetOnLoad": false
   }
 }

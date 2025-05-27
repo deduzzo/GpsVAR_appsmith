@@ -91,9 +91,9 @@
         "key": "formData.where.data"
       }
     ],
-    "executeOnLoad": true,
     "name": "getDatiVarDistrettoPeriodo",
     "pageId": "Home",
+    "runBehaviour": "ON_PAGE_LOAD",
     "userSetOnLoad": false
   }
 }

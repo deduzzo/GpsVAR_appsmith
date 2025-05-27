@@ -66,9 +66,9 @@
         "key": "formData.rowIndex.data"
       }
     ],
-    "executeOnLoad": false,
     "name": "deleteFromRowIndex",
     "pageId": "Home",
+    "runBehaviour": "MANUAL",
     "userSetOnLoad": false
   }
 }

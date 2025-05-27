@@ -124,9 +124,9 @@
         "key": "formData.where.data.children[1].children[0].value"
       }
     ],
-    "executeOnLoad": true,
     "name": "getVariabiliDistretto",
     "pageId": "Home",
+    "runBehaviour": "ON_PAGE_LOAD",
     "userSetOnLoad": true
   }
 }

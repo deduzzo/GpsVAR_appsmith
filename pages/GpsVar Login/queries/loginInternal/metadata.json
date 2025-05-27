@@ -54,10 +54,10 @@
         "key": "path"
       }
     ],
-    "executeOnLoad": false,
     "fullyQualifiedName": "loginInternal",
     "name": "loginInternal",
     "pageId": "GpsVar Login",
+    "runBehaviour": "MANUAL",
     "userSetOnLoad": false
   }
 }

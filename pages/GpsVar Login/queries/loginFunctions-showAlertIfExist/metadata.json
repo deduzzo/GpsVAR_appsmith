@@ -22,10 +22,10 @@
         "key": "body"
       }
     ],
-    "executeOnLoad": false,
     "fullyQualifiedName": "loginFunctions.showAlertIfExist",
     "name": "showAlertIfExist",
     "pageId": "GpsVar Login",
+    "runBehaviour": "MANUAL",
     "userSetOnLoad": false
   }
 }

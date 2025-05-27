@@ -22,10 +22,10 @@
         "key": "body"
       }
     ],
-    "executeOnLoad": false,
     "fullyQualifiedName": "loginFunctions.showPasswordHash",
     "name": "showPasswordHash",
     "pageId": "GpsVar Login",
+    "runBehaviour": "MANUAL",
     "userSetOnLoad": false
   }
 }

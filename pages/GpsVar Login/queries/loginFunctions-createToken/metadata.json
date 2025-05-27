@@ -26,10 +26,10 @@
         "key": "body"
       }
     ],
-    "executeOnLoad": false,
     "fullyQualifiedName": "loginFunctions.createToken",
     "name": "createToken",
     "pageId": "GpsVar Login",
+    "runBehaviour": "MANUAL",
     "userSetOnLoad": false
   }
 }

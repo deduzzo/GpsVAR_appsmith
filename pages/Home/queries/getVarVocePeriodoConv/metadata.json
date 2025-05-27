@@ -116,9 +116,9 @@
         "key": "formData.where.data.children[2].value"
       }
     ],
-    "executeOnLoad": false,
     "name": "getVarVocePeriodoConv",
     "pageId": "Home",
+    "runBehaviour": "MANUAL",
     "userSetOnLoad": false
   }
 }

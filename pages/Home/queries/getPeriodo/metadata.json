@@ -103,9 +103,9 @@
         "key": "formData.where.data.children[2].children[1].value"
       }
     ],
-    "executeOnLoad": true,
     "name": "getPeriodo",
     "pageId": "Home",
+    "runBehaviour": "ON_PAGE_LOAD",
     "userSetOnLoad": false
   }
 }
