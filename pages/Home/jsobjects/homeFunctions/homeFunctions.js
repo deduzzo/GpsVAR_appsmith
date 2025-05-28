@@ -8,6 +8,7 @@ export default {
 		"2": "Admin Distretto",
 		"3": "Amministratore"
 	},
+	firstLoadingOk: false,
 	userData: null,
 	distrettoCambiato: false,
 	secret: "UxZ>69'[Tu<6",
@@ -23,7 +24,7 @@ export default {
 	======================= */
 	async initLoad() {
 		showModal(caricamentoMdl.name);
-
+		this.firstLoadingOk = false;
 		try {
 			await this.getDistrettiMap();          // 1
 			await this.verifyTokenExpires();       // 2
@@ -35,7 +36,9 @@ export default {
 			console.error("Errore in initLoad:", err);
 			showAlert("Si è verificato un errore nel caricamento iniziale", "error");
 		} finally {
+
 			closeModal(caricamentoMdl.name);
+			this.firstLoadingOk = true;
 		}
 	},
 
@@ -46,6 +49,13 @@ export default {
 		storeValue("token", null);
 		storeValue("message", { msg, type });
 		navigateTo("GpsVar Login");
+	},
+
+	getUniqueDistrettiFromId: (ids) => {
+		let out = [];
+		for (let id of ids)
+			out.push(this.distrettiMap.byId[parseInt(id)].unique);
+		return out;
 	},
 
 	/* =======================
@@ -81,9 +91,9 @@ export default {
 	},
 
 	getMesi: () =>
-		"Gennaio_Febbraio_Marzo_Aprile_Maggio_Giugno_Luglio_Agosto_Settembre_Ottobre_Novembre_Dicembre".split(
-			"_"
-		),
+	"Gennaio_Febbraio_Marzo_Aprile_Maggio_Giugno_Luglio_Agosto_Settembre_Ottobre_Novembre_Dicembre".split(
+		"_"
+	),
 
 	getMesiMap: function () {
 		return this.getMesi().map((m, i) => ({ mese: m, value: i + 1 }));
@@ -99,7 +109,8 @@ export default {
 	async getVariabiliDistretto() {
 		this.allVariabiliMap = {};
 		await getVariabiliDistretto.run();
-		getVariabiliDistretto.data.forEach(v => {
+		await getAllVariabili.run();
+		getAllVariabili.data.forEach(v => {
 			this.allVariabiliMap[v["#"]] = v;
 		});
 	},
@@ -180,14 +191,14 @@ export default {
 					distrettoRaw: decoded.data.id_distretto,
 					// se non è stato cambiato distretto uso il primo, altrimenti mantengo quello selezionato
 					codDistretto: this.distrettoCambiato
-						? this.userData.codDistretto
-						: parseInt(Object.keys(distretti)[0]),
+					? this.userData.codDistretto
+					: parseInt(Object.keys(distretti)[0]),
 					distretto: this.distrettoCambiato
-						? this.userData.distretto
-						: this.distrettiMap.byId[Object.keys(distretti)[0]].unique,
+					? this.userData.distretto
+					: this.distrettiMap.byId[Object.keys(distretti)[0]].unique,
 					distrettoTxt: this.distrettoCambiato
-						? this.userData.distrettoTxt
-						: distretti[Object.keys(distretti)[0]]
+					? this.userData.distrettoTxt
+					: distretti[Object.keys(distretti)[0]]
 				};
 
 				const newToken = this.createToken({ data: decoded.data });
@@ -209,22 +220,109 @@ export default {
 	/* =======================
 	   CSV & PDF
 	======================= */
-	generaCSV() {
-		const mockData = getAllConvenzionati.data;
-		return papaparse.unparse(mockData, { header: true, delimiter: ";", newline: "\r\n" });
+
+	generaCSVGPS: async () => {
+		await getAllVarDistrettiPeriodoCSV.run();
+		let allData = await getAllVarDistrettiPeriodoCSV.data;
+		let out = [];
+		const mensilita = ["GEN","FEB", "MAR", "APR", "MAG", "GIU", "LUG", "AGO", "SET", "OTT", "NOV", "DIC"];
+		const riferimentoStipendio = moment({
+			year: homeFunctions.periodo.anno,
+			month: homeFunctions.periodo.mese -1,
+			day: 1
+		}).add(1, 'month');
+		for (let riga of allData) {
+			const voceSplitted = riga["voce"].split("$");
+			const periodoSplitted = riga["periodo"].split("_");
+			const riferimentoVariabile = moment({
+				year: parseInt(periodoSplitted[0]),
+				month: parseInt(periodoSplitted[1]) -1,
+				day: 1
+			}).endOf('month').format("DD/MM/YYYY");
+			const valoreVariabileRow = this.getValoreCalcolato(riga)['double'];
+			console.log(valoreVariabileRow);
+			out.push({
+				"INPUT": "LVARIDE",
+				"RIFERIMENTO": riferimentoVariabile,
+				"CI": riga["id_conv"],
+				"ANNO": riferimentoStipendio.year(),
+				"MESE": parseInt(riferimentoStipendio.month()),
+				"MENSILITA": mensilita[riferimentoStipendio.month()],
+				"VOCE": voceSplitted[0].replace("#",""),
+				"SUB": voceSplitted[1],
+				"ARR": "C",
+				"QTA": this.allVariabiliMap[riga['voce']]['IMPORTO'] === "" ? valoreVariabileRow : "",
+				"IMP": this.allVariabiliMap[riga['voce']]['IMPORTO'] === "SI" ? valoreVariabileRow.toFixed(2).replace(",",".") : "",
+				"SEDE_DEL": "",
+				"ANNO_DEL": "",
+				"NUMERO_DEL": "",
+				"DELIBERA": ""
+			})
+		}
+		console.log(out);
+		return out;
 	},
 
-	scaricaCSV() {
-		download(this.generaCSV(), "variabili.csv", "text/csv");
+	generaCSVDistretti: () => {
+		const data = getDatiVarDistrettoPeriodo.data;
+		let outData = [];
+		for (let riga of data) {
+			outData.push({
+				"Periodo": riga.periodo,
+				"Competenza": riga.competenza,
+				"Variabile": this.allVariabiliMap[riga.voce].DESCRIZIONE,
+				"Convenzionato": this.allConvenzionatiMap[riga.id_conv].COGNOME + " " + this.allConvenzionatiMap[riga.id_conv].NOME,
+				"Rapporto": this.allConvenzionatiMap[riga.id_conv].RAPPORTO,
+				"Valore": this.getValoreCalcolato(riga)['double'],
+				"Utente": riga.utente,
+				"Distretto": this.distrettiMap.byUnique[riga.distretto].descrizione
+			});
+		}
+		return outData;
+	},
+
+	generaCSV: async (cosa = "reportGPS") => {
+		let mockData = null;
+		let fileName = null;
+		let postfix = this.periodo.anno + "_" + this.periodo.mese + "_al_" + moment().format("YYYY-MM-DD_HH_MM");
+		switch (cosa) {
+			case "reportGPS":
+				mockData = await this.generaCSVGPS();
+				fileName = "export_variabili_";
+				break;
+			case "reportDistretto":
+				mockData = this.generaCSVDistretti();
+				fileName = "export_variabili_distretto_" + this.userData.distretto + "_";
+				break;
+		}
+		return {
+			data: papaparse.unparse(mockData, { header: true, delimiter: ";", newline: "\r\n" }),
+			fileName: fileName + postfix 
+		}
+	},
+
+	scaricaCSV: async (cosa) => {
+		let out = await this.generaCSV(cosa);
+		download(out.data, out.fileName +".csv", "text/csv");
 	},
 
 	getValoreCalcolato(row) {
-		if (row.altri_valori && row.altri_valori !== "")
-			return (
-				parseFloat(row.valore) * parseFloat(row.altri_valori) +
-				` (${row.valore} * ${row.altri_valori})`
-			);
-		return row.valore;
+		let valore = parseFloat((row['valore'] / 100).toFixed(2));
+		let altriValori = 
+				row['altri_valori'] && row['altri_valori'] !== "" ? 		(parseFloat((row['altri_valori'] / 100).toFixed(2))) : null;
+		let out = valore;
+
+		if (altriValori) 
+			out  = valore * altriValori;
+		out = out.toFixed(2).replace(".",",");
+		if (out.endsWith(",00"))
+			out = out.substr(0,out.length -3);
+
+		return {
+			toString: (this.allVariabiliMap[row['voce']].IMPORTO === "SI" ? "€" : "") + out,
+			double: parseFloat(out.replace(",",".")),
+			note: (this.allVariabiliMap[row['voce']].ALTRI_DATI && this.allVariabiliMap[row['voce']].ALTRI_DATI !== "") ? (" (" +this.allVariabiliMap[row['voce']].ALTRI_DATI + " " + altriValori.toString() + ")"  )  : ""
+		}
 	},
 
 	competenzaToString(comp = "2025_04") {
@@ -232,65 +330,130 @@ export default {
 		return `${this.getMeseItaliano(parseInt(mese))} ${anno}`;
 	},
 
+	/*
+	 *  reportDistrettoPDF
+	 *  Genera un PDF riepilogativo delle variabili di distretto.
+	 *  Il report è ora suddiviso per RAPPORTO → CONVENZIONATO,
+	 *  mantenendo la stessa impaginazione per i singoli record.
+	 */
 	reportDistrettoPDF() {
+		/* --------------------------------------------------------
+	   1. Preparazione dati
+	   -------------------------------------------------------- */
 		const dati = getDatiVarDistrettoPeriodo.data;
+
+		// Aggiungo il campo "rapporto" a ogni riga prelevandolo dalla mappa dei convenzionati
+		for (const riga of dati) {
+			const conv = this.allConvenzionatiMap[riga.id_conv];
+			riga.rapporto = conv ? conv.RAPPORTO : "";
+		}
+
+		/* --------------------------------------------------------
+	   2. Creazione del documento
+	   -------------------------------------------------------- */
 		const doc = jspdf.jsPDF();
 
 		/* LOGO */
-		const logoWidth = 40;
-		const logoHeight = (logoWidth * 100) / 185;
+		const logoWidth  = 40;
+		const logoHeight = (logoWidth * 100) / 185; // altezza in proporzione
 		doc.addImage(resources.logoAsp, "PNG", 210 - logoWidth - 10, 10, logoWidth, logoHeight);
 
 		/* TITOLI */
 		doc.setFontSize(18);
 		doc.text("Riepilogo variabili distretto", 80, 22, null, null, "center");
-		doc.text(this.userData.distrettoTxt, 80, 30, null, null, "center");
+		doc.text(this.userData.distrettoTxt,            80, 30, null, null, "center");
 
 		doc.setFontSize(9);
 		doc.setTextColor(100);
 		doc.text(`Generato il ${moment().format("DD/MM/YYYY HH:mm")}`, 80, 35, null, null, "center");
 
-		/* RAGGRUPPAMENTO DATI */
-		const grouped = dati.reduce((acc, el) => {
-			if (!acc[el.id_conv]) acc[el.id_conv] = [];
-			acc[el.id_conv].push(el);
+		/* --------------------------------------------------------
+	   3. Raggruppamento dati per RAPPORTO e sottoraggruppamento
+	      per CONVENZIONATO
+	   -------------------------------------------------------- */
+		const groupedByRapporto = dati.reduce((acc, el) => {
+			if (!acc[el.rapporto]) acc[el.rapporto] = [];
+			acc[el.rapporto].push(el);
 			return acc;
 		}, {});
 
 		const finalData = [];
-		Object.keys(grouped)
-			.sort((a, b) => a - b)
-			.forEach(id_conv => {
+
+		// Ciclo sui rapporti in ordine alfabetico
+		Object.keys(groupedByRapporto)
+			.sort()
+			.forEach(rapporto => {
+
+			/* --- Titolo sezione RAPPORTO -------------------- */
+			finalData.push([
+				{
+					content : `Rapporto: ${rapporto}`,
+					colSpan : 6,
+					styles  : {
+						halign    : "left",
+						fillColor : [180, 200, 255],
+						fontStyle : "bold",
+						fontSize  : 11
+					}
+				}
+			]);
+
+			/* --- Sottoraggruppamento per convenzionato ------- */
+			const byConv = groupedByRapporto[rapporto].reduce((acc, el) => {
+				if (!acc[el.id_conv]) acc[el.id_conv] = [];
+				acc[el.id_conv].push(el);
+				return acc;
+			}, {});
+
+			Object.keys(byConv)
+				.sort((a, b) => a - b)   // ordinamento numerico degli id_conv
+				.forEach(id_conv => {
+
+				/* Header convenzionato */
 				finalData.push([
 					{
-						content: this.getConvenzionatoDescFromId(id_conv),
-						colSpan: 5,
-						styles: { halign: "left", fillColor: [220, 220, 220], fontStyle: "bold" }
+						content : this.getConvenzionatoDescFromId(id_conv),
+						colSpan : 6,
+						styles  : {
+							halign    : "left",
+							fillColor : [220, 220, 220],
+							fontStyle : "bold"
+						}
 					}
 				]);
+
+				/* Intestazione colonne (una sola volta per convenzionato) */
 				finalData.push([
-					{ content: "Voce", styles: { fontSize: 8, fontStyle: "bold" } },
-					{ content: "Competenza", styles: { fontSize: 8, fontStyle: "bold" } },
-					{ content: "Valore", styles: { fontSize: 8, fontStyle: "bold" } },
-					{ content: "Utente", styles: { fontSize: 8, fontStyle: "bold" } },
-					{ content: "Data Ora", styles: { fontSize: 8, fontStyle: "bold" } }
+					{ content: "Rapporto",    styles: { fontSize: 7, fontStyle: "bold" } },
+					{ content: "Voce",        styles: { fontSize: 7, fontStyle: "bold" } },
+					{ content: "Competenza",  styles: { fontSize: 7, fontStyle: "bold" } },
+					{ content: "Valore",      styles: { fontSize: 7, fontStyle: "bold" } },
+					{ content: "Utente",      styles: { fontSize: 7, fontStyle: "bold" } },
+					{ content: "Note",      styles: { fontSize: 7, fontStyle: "bold" } },
 				]);
-				grouped[id_conv].forEach(item => {
+
+				/* Righe di dettaglio */
+				byConv[id_conv].forEach(item => {
 					finalData.push([
+						item.rapporto,
 						this.allVariabiliMap[item.voce].DESCRIZIONE,
 						this.competenzaToString(item.competenza),
-						this.getValoreCalcolato(item),
+						this.getValoreCalcolato(item)["toString"],
 						item.utente,
-						item.data_ora
+						this.getValoreCalcolato(item)["note"],
 					]);
 				});
 			});
+		});
 
+		/* --------------------------------------------------------
+	   4. Tabella e numerazione pagine
+	   -------------------------------------------------------- */
 		jspdf_autotable.autoTable(doc, {
-			body: finalData,
-			startY: 45,
-			theme: "grid",
-			styles: { fontSize: 10 },
+			body      : finalData,
+			startY    : 45,
+			theme     : "grid",
+			styles    : { fontSize: 9 },
 			headStyles: { fillColor: [0, 0, 128] },
 			didDrawPage: data => {
 				const pageCount = doc.internal.getNumberOfPages();
@@ -299,23 +462,27 @@ export default {
 			}
 		});
 
-		/* FIRMA */
-		const firmaX = doc.internal.pageSize.width - 60;
+		/* --------------------------------------------------------
+	   5. Firma
+	   -------------------------------------------------------- */
+		const firmaX = doc.internal.pageSize.width  - 60;
 		const firmaY = doc.internal.pageSize.height - 30;
 		doc.setFontSize(12);
 		doc.text("Il responsabile", firmaX, firmaY);
 		doc.line(firmaX, firmaY + 10, firmaX + 50, firmaY + 10);
-		// Genera il nome del file con data e ora corrente
-    const timestamp = moment().format("YYYY-MM-DD_HH-mm");
-    const filename = `report-${timestamp}.pdf`;
-		
-				// Salva o restituisci il PDF
-		let dataURL = doc.output("dataurlstring");
-		// Aggiungi il nome del file come parametro all'URL
-    //dataURL += "&filename=" + encodeURIComponent(filename);
 
-    // Restituisci il data URL modificato
-    return dataURL;
+		/* --------------------------------------------------------
+	   6. Salvataggio / restituzione
+	   -------------------------------------------------------- */
+		const timestamp = moment().format("YYYY-MM-DD_HH-mm");
+		const filename  = `report-${timestamp}.pdf`;
+
+		//  Se vuoi forzare il download: doc.save(filename);
+		//  In Appsmith di solito si restituisce il dataURL:
+		let dataURL = doc.output("dataurlstring");
+		//  dataURL += "&filename=" + encodeURIComponent(filename); // eventuale append
+
+		return dataURL;
 	},
 
 	/* =======================
@@ -349,8 +516,8 @@ export default {
 			statusTxt.setText("");
 			aggiungiVariabile.setDisabled(
 				!convenzionatoSelezionato.selectedOptionValue ||
-					!variabileSelezionata.selectedOptionValue ||
-					!importoVariabile.text
+				!variabileSelezionata.selectedOptionValue ||
+				!importoVariabile.text
 			);
 			return;
 		}

@@ -44,6 +44,9 @@
     },
     {
       "key": "groupButtons.groupButton1.menuItems.menuItemdosrhrn3k3.onClick"
+    },
+    {
+      "key": "groupButtons.groupButtonezzecblo8e.menuItems.menuItemd5a6jj4yv9.onClick"
     }
   ],
   "dynamicTriggerPathList": [
@@ -58,6 +61,9 @@
     },
     {
       "key": "groupButtons.groupButton1.menuItems.menuItemdosrhrn3k3.onClick"
+    },
+    {
+      "key": "groupButtons.groupButtonezzecblo8e.menuItems.menuItemd5a6jj4yv9.onClick"
     }
   ],
   "groupButtons": {
@@ -198,6 +204,7 @@
           "isDisabled": false,
           "isVisible": true,
           "label": "Aggiorna dati...",
+          "onClick": "{{ homeFunctions.initLoad()}}",
           "widgetId": "ary1ue8vhj"
         },
         "menuItemfl5urg45l0": {

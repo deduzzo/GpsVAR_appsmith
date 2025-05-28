@@ -1,6 +1,6 @@
 {
-  "gitSyncId": "6808fda53361a34d8231cac0_861ddd89-eb59-4039-8e89-27590d31b327",
-  "id": "Home_aggiungiDatiVariabile",
+  "gitSyncId": "6808fda53361a34d8231cac0_a90469c3-b885-40aa-9ab4-e210edc8c631",
+  "id": "Home_getAllVarDistrettiPeriodoCSV",
   "pluginId": "google-sheets-plugin",
   "pluginType": "SAAS",
   "unpublishedAction": {
@@ -8,14 +8,14 @@
       "encodeParamsToggle": true,
       "formData": {
         "command": {
-          "data": "INSERT_ONE"
+          "data": "FETCH_MANY"
         },
         "entityType": {
           "data": "ROWS"
         },
         "pagination": {
           "data": {
-            "limit": "20",
+            "limit": "999999",
             "offset": "0"
           }
         },
@@ -28,25 +28,47 @@
         "range": {
           "data": ""
         },
-        "rowObjects": {
-          "data": "{\n\t\"periodo\": {{ homeFunctions.periodo.anno + \"_\" + homeFunctions.periodo.mese}},\n\t\"competenza\": {{annoCompetenza.selectedOptionValue.toString() + \"_\" + meseCompetenza.selectedOptionValue.toString()}},\n\t\"voce\": {{variabileSelezionata.selectedOptionValue}},\n\t\"id_conv\": {{ convenzionatoSelezionato.selectedOptionValue}},\n\t\t\"valore\": {{ parseFloat(importoVariabile.text).toFixed(2).replaceAll(\".\",\",\")}},\n\t\"altri_valori\": {{ altriDati.isVisible ? altriDati.text : \"\"}},\n\t\"utente\": {{homeFunctions.userData.username}},\n\t\"data_ora\": {{moment().format(\"YYYY-MM-DD HH:mm\")}},\n\t\"valido\": \"SI\",\n\t\"distretto\": {{homeFunctions.userData.distretto}}\n}"
-        },
         "sheetName": {
           "data": "dati"
         },
         "sheetUrl": {
           "componentData": "",
-          "data": "https://docs.google.com/spreadsheets/d/186jsr4bHqJ60W8_WEg_RJdu14jYVQ6RI8VRNVe80gWg",
+          "data": "https://docs.google.com/spreadsheets/d/186jsr4bHqJ60W8_WEg_RJdu14jYVQ6RI8VRNVe80gWg/edit?gid=1667602550",
           "viewType": "json"
         },
         "smartSubstitution": {
           "data": true
+        },
+        "sortBy": {
+          "data": [
+            {
+              "column": "",
+              "order": "Ascending"
+            }
+          ]
         },
         "tableHeaderIndex": {
           "data": "1"
         },
         "where": {
           "data": {
+            "children": [
+              {
+                "condition": "EQ",
+                "key": "periodo",
+                "value": "{{homeFunctions.periodo.anno + \"_\" + homeFunctions.periodo.mese}}"
+              },
+              {
+                "condition": "IN",
+                "key": "distretto",
+                "value": "{{homeFunctions.getUniqueDistrettiFromId(Object.values( distrettiSelezionatiReportCsv.selectedOptionValues))}}"
+              },
+              {
+                "condition": "EQ",
+                "key": "valido",
+                "value": "SI"
+              }
+            ],
             "condition": "AND"
           }
         }
@@ -63,10 +85,13 @@
     },
     "dynamicBindingPathList": [
       {
-        "key": "formData.rowObjects.data"
+        "key": "formData.where.data.children[0].value"
+      },
+      {
+        "key": "formData.where.data.children[1].value"
       }
     ],
-    "name": "aggiungiDatiVariabile",
+    "name": "getAllVarDistrettiPeriodoCSV",
     "pageId": "Home",
     "runBehaviour": "MANUAL",
     "userSetOnLoad": false

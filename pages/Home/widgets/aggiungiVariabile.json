@@ -30,7 +30,7 @@
   "iconAlign": "left",
   "iconName": "add",
   "isDefaultClickDisabled": true,
-  "isDisabled": "{{ !homeFunctions.dataCompetenzaCongrua() || !convenzionatoSelezionato.selectedOptionValue || !variabileSelezionata.selectedOptionValue || !importoVariabile.text || importoVariabile.text=== \"\" || !homeFunctions.periodo || (altriDati.isVisible && (altriDati.text === \"\" || !altriDati.text))}}",
+  "isDisabled": "{{ \nhomeFunctions.firstLoadingOk | !homeFunctions.dataCompetenzaCongrua() || !convenzionatoSelezionato.selectedOptionValue || !variabileSelezionata.selectedOptionValue || !importoVariabile.text || importoVariabile.text=== \"\" || !homeFunctions.periodo || (altriDati.isVisible && (altriDati.text === \"\" || !altriDati.text))}}",
   "isLoading": false,
   "isVisible": true,
   "key": "mo4lg6p3cc",

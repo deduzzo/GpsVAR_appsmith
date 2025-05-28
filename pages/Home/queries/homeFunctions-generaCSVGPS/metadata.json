@@ -1,17 +1,12 @@
 {
-  "gitSyncId": "6808fda53361a34d8231cac0_65aa26f7-132a-4d27-9c1d-1811383c65a4",
-  "id": "Home_homeFunctions.generaCSV",
+  "gitSyncId": "6808fda53361a34d8231cac0_6ad01c98-ab07-4fa1-b474-daacf2cf08fc",
+  "id": "Home_homeFunctions.generaCSVGPS",
   "pluginId": "js-plugin",
   "pluginType": "JS",
   "unpublishedAction": {
     "actionConfiguration": {
       "encodeParamsToggle": true,
-      "jsArguments": [
-        {
-          "name": "cosa",
-          "value": "reportGPS"
-        }
-      ],
+      "jsArguments": [],
       "paginationType": "NONE",
       "timeoutInMillisecond": 10000
     },
@@ -27,8 +22,8 @@
         "key": "body"
       }
     ],
-    "fullyQualifiedName": "homeFunctions.generaCSV",
-    "name": "generaCSV",
+    "fullyQualifiedName": "homeFunctions.generaCSVGPS",
+    "name": "generaCSVGPS",
     "pageId": "Home",
     "runBehaviour": "MANUAL",
     "userSetOnLoad": false

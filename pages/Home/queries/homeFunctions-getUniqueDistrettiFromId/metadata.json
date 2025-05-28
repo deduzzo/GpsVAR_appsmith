@@ -1,6 +1,6 @@
 {
-  "gitSyncId": "6808fda53361a34d8231cac0_65aa26f7-132a-4d27-9c1d-1811383c65a4",
-  "id": "Home_homeFunctions.generaCSV",
+  "gitSyncId": "6808fda53361a34d8231cac0_09135cf4-1ff8-4337-8842-a26021c01008",
+  "id": "Home_homeFunctions.getUniqueDistrettiFromId",
   "pluginId": "js-plugin",
   "pluginType": "JS",
   "unpublishedAction": {
@@ -8,8 +8,7 @@
       "encodeParamsToggle": true,
       "jsArguments": [
         {
-          "name": "cosa",
-          "value": "reportGPS"
+          "name": "ids"
         }
       ],
       "paginationType": "NONE",
@@ -27,8 +26,8 @@
         "key": "body"
       }
     ],
-    "fullyQualifiedName": "homeFunctions.generaCSV",
-    "name": "generaCSV",
+    "fullyQualifiedName": "homeFunctions.getUniqueDistrettiFromId",
+    "name": "getUniqueDistrettiFromId",
     "pageId": "Home",
     "runBehaviour": "MANUAL",
     "userSetOnLoad": false

@@ -5,7 +5,7 @@
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
   "bottomRow": 12,
   "boxShadow": "none",
-  "defaultOptionValue": "{{ ((options, serverSideFiltering) => (  Object.values(homeFunctions.getDistrettiPossibiliMap())))(MultiSelect1.options, MultiSelect1.serverSideFiltering) }}",
+  "defaultOptionValue": "{{ ((options, serverSideFiltering) => (  Object.values(homeFunctions.getDistrettiPossibiliMap())))(distrettiSelezionatiReportCsv.options, distrettiSelezionatiReportCsv.serverSideFiltering) }}",
   "dynamicBindingPathList": [
     {
       "key": "accentColor"
@@ -49,7 +49,7 @@
   "needsErrorInfo": false,
   "optionLabel": "label",
   "optionValue": "value",
-  "originalBottomRow": 18,
+  "originalBottomRow": 12,
   "originalTopRow": 5,
   "parentColumnSpace": 6.9375,
   "parentId": "lt4iylkmzz",
@@ -65,5 +65,5 @@
   "type": "MULTI_SELECT_WIDGET_V2",
   "version": 1,
   "widgetId": "6spz6zqlt0",
-  "widgetName": "MultiSelect1"
+  "widgetName": "distrettiSelezionatiReportCsv"
 }
