@@ -240,7 +240,6 @@ export default {
 				day: 1
 			}).endOf('month').format("DD/MM/YYYY");
 			const valoreVariabileRow = this.getValoreCalcolato(riga)['double'];
-			console.log(valoreVariabileRow);
 			out.push({
 				"INPUT": "LVARIDE",
 				"RIFERIMENTO": riferimentoVariabile,
@@ -252,7 +251,7 @@ export default {
 				"SUB": voceSplitted[1],
 				"ARR": "C",
 				"QTA": this.allVariabiliMap[riga['voce']]['IMPORTO'] === "" ? valoreVariabileRow : "",
-				"IMP": this.allVariabiliMap[riga['voce']]['IMPORTO'] === "SI" ? valoreVariabileRow.toFixed(2).replace(",",".") : "",
+				"IMP": this.allVariabiliMap[riga['voce']]['IMPORTO'] === "SI" ? valoreVariabileRow : "",
 				"SEDE_DEL": "",
 				"ANNO_DEL": "",
 				"NUMERO_DEL": "",
