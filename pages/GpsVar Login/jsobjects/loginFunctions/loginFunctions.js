@@ -71,6 +71,7 @@ export default {
 				error = 'Combinazione email/password non valida';
 		}
 		if (loginOk) {
+			await updateLastLogin.run({rowIndex: user.rowIndex});
 			storeValue("token",this.createToken({data: user}));
 			navigateTo("Home");
 		}
