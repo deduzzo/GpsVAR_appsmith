@@ -41,7 +41,7 @@ export default {
 		let user = (await getUserFromIdAndDomain.run());
 		let error = "";
 		let loginOk = false;
-		const username = inp_username.text.replace("@asp.messina.it","");
+		const username = inp_username.text.toLowerCase().replace("@asp.messina.it","");
 
 		if (user.length > 0) {
 			user = user[0];
