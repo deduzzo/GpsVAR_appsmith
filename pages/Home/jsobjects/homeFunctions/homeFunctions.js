@@ -320,7 +320,7 @@ export default {
 		return {
 			toString: (this.allVariabiliMap[row['voce']].IMPORTO === "SI" ? "€" : "") + out,
 			double: parseFloat(out.replace(",",".")),
-			note: (this.allVariabiliMap[row['voce']].ALTRI_DATI && this.allVariabiliMap[row['voce']].ALTRI_DATI !== "") ? (" (" +this.allVariabiliMap[row['voce']].ALTRI_DATI + " " + altriValori.toString() + ")"  )  : ""
+			note: (this.allVariabiliMap[row['voce']].ALTRI_DATI && this.allVariabiliMap[row['voce']].ALTRI_DATI !== "") ? (" (" +this.allVariabiliMap[row['voce']].ALTRI_DATI + ": " + altriValori.toString() + ")"  )  : ""
 		}
 	},
 
@@ -439,7 +439,7 @@ export default {
 						this.competenzaToString(item.competenza),
 						this.getValoreCalcolato(item)["toString"],
 						item.utente,
-						this.getValoreCalcolato(item)["note"],
+						this.getValoreCalcolato(item)["note"] + (item.note !== "" ? (" - " + item.note) : "") 
 					]);
 				});
 			});
