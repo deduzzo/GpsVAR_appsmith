@@ -311,7 +311,7 @@ export default {
 				row['altri_valori'] && row['altri_valori'] !== "" ? 		(parseFloat((row['altri_valori'] / 100).toFixed(2))) : null;
 		let out = valore;
 
-		if (altriValori) 
+		if (altriValori && this.allVariabiliMap[row['voce']].MOLTIPLICA === "SI") 
 			out  = valore * altriValori;
 		out = out.toFixed(2).replace(".",",");
 		if (out.endsWith(",00"))
@@ -507,7 +507,7 @@ export default {
 		aggiungiVariabile.setDisabled(true);
 
 		await getVarVocePeriodoConv.run();
-		if (getVarVocePeriodoConv.data.length !== 0) {
+		if (getVarVocePeriodoConv.data.length !== 0 && this.allVariabiliMap[ variabileSelezionata.selectedOptionValue].SI_RIPETE !== "SI") {
 			showAlert(
 				"ERRORE! Esiste già lo stesso tipo di variabile per il convenzionato selezionato.",
 				"error"

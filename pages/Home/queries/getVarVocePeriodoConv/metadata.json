@@ -119,9 +119,6 @@
       },
       {
         "key": "formData.where.data.children[2].value"
-      },
-      {
-        "key": "formData.where.data.children[3].value"
       }
     ],
     "name": "getVarVocePeriodoConv",
