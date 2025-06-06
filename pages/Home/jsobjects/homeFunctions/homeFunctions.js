@@ -527,7 +527,7 @@ export default {
 
 		/* reset form */
 		[convenzionatoSelezionato, variabileSelezionata].forEach(cmb => cmb.setSelectedOption(""));
-		[importoVariabile, altriDati].forEach(inp => inp.setValue(""));
+		[importoVariabile, altriDati,note_txt].forEach(inp => inp.setValue(""));
 		meseCompetenza.setSelectedOption(this.periodo.mese);
 		annoCompetenza.setSelectedOption(this.periodo.anno);
 
