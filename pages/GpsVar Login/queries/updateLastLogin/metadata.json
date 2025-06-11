@@ -29,7 +29,7 @@
           "data": ""
         },
         "rowObjects": {
-          "data": "{{\n{\n\trowIndex: this.params.rowIndex,\n\tlastLogin: moment().format(\"YYYY-MM-DD hh:mm\")\n}\n}}"
+          "data": "{{\n{\n\trowIndex: this.params.rowIndex,\n\tlastLogin: moment().format(\"YYYY-MM-DD HH:MM\")\n}\n}}"
         },
         "sheetName": {
           "data": "utenti"

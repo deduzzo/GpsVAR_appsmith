@@ -306,21 +306,33 @@ export default {
 	},
 
 	getValoreCalcolato(row) {
-		let valore = parseFloat((row['valore'] / 100).toFixed(2));
-		let altriValori = 
-				row['altri_valori'] && row['altri_valori'] !== "" ? 		(parseFloat((row['altri_valori'] / 100).toFixed(2))) : null;
-		let out = valore;
+		try {
+			let valore = parseFloat((parseInt(row['valore']) / 100).toFixed(2));
+			let altriValori = 
+					(row['altri_valori'] && row['altri_valori'] !== "") ? 		(parseFloat((parseInt(row['altri_valori']) / 100).toFixed(2))) : null;
+			let out = valore;
 
-		if (altriValori && this.allVariabiliMap[row['voce']].MOLTIPLICA === "SI") 
-			out  = valore * altriValori;
-		out = out.toFixed(2).replace(".",",");
-		if (out.endsWith(",00"))
-			out = out.substr(0,out.length -3);
+			if (altriValori && this.allVariabiliMap[row['voce']].MOLTIPLICA === "SI") {
+				if (altriValori === null)
+					out = valore
+				else
+					out  = valore * altriValori;
+			}
+			out = out.toFixed(2).replace(".",",");
+			if (out.endsWith(",00"))
+				out = out.substr(0,out.length -3);
 
-		return {
-			toString: (this.allVariabiliMap[row['voce']].IMPORTO === "SI" ? "€" : "") + out,
-			double: parseFloat(out.replace(",",".")),
-			note: (this.allVariabiliMap[row['voce']].ALTRI_DATI && this.allVariabiliMap[row['voce']].ALTRI_DATI !== "") ? (" (" +this.allVariabiliMap[row['voce']].ALTRI_DATI + ": " + altriValori.toString() + ")"  )  : ""
+			return {
+				toString: (this.allVariabiliMap[row['voce']].IMPORTO === "SI" ? "€" : "") + " " + out + ((altriValori || this.allVariabiliMap[row['voce']].ALTRI_DATI !== "") ? ( " (" + this.allVariabiliMap[row['voce']].ALTRI_DATI + ": " + (altriValori ?? "N.D.") + ")" + (row['note'] && row['note'] !== "" ? (" - " + row['note']) : "" )  ) : "") ,
+				double: parseFloat(out.replace(",",".")),
+				note: (this.allVariabiliMap[row['voce']].ALTRI_DATI && this.allVariabiliMap[row['voce']].ALTRI_DATI !== "") ? (" (" +this.allVariabiliMap[row['voce']].ALTRI_DATI + ": " + altriValori.toString() + ")"  )  : ""
+			}
+		} catch (err) {
+			return {
+				toString: "err: " + err.toString(),
+				double: 0,
+				note:"Errore"
+			}
 		}
 	},
 

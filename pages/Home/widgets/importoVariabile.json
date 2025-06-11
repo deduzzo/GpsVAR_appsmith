@@ -32,7 +32,7 @@
   "inputType": "NUMBER",
   "isDisabled": "{{!variabileSelezionata.selectedOptionValue || !convenzionatoSelezionato.selectedOptionValue || !homeFunctions.periodo}}",
   "isLoading": false,
-  "isRequired": false,
+  "isRequired": true,
   "isVisible": true,
   "key": "ebx0ad3v4t",
   "label": "{{variabileSelezionata.selectedOptionValue ? ( homeFunctions.allVariabiliMap[variabileSelezionata.selectedOptionValue][\"IMPORTO\"] === \"\" ? \"quantità\" : \"valore €\") : \"selezionare una variabile...\"}}",
