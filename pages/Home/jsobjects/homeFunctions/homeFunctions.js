@@ -18,6 +18,7 @@ export default {
 	allVariabiliMap: {},
 	allConvenzionatiMap: {},
 	filtraPerNomeUtente: true,
+	periodoSolaLettura:false,
 
 	/* =======================
 	   LOAD INIZIALE
@@ -127,7 +128,15 @@ export default {
 		// se serve aggiornare il dataset, decommenta:
 		await getPeriodo.run();
 		const periodo = getPeriodo.data;
-		this.periodo = periodo.length === 1 ? periodo[0] : null;
+		if (periodo.length === 1)
+			this.periodo =  periodo[0];
+		else {
+			const periodoVis = getLastPeriodoVisualizzazione.data;
+			if (periodoVis.length === 1) {
+				this.periodo = periodoVis[0];
+				this.periodoSolaLettura = true;
+			}
+		}
 	},
 
 	async getDistrettiMap() {

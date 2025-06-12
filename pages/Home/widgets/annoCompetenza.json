@@ -17,16 +17,22 @@
     },
     {
       "key": "defaultOptionValue"
+    },
+    {
+      "key": "isDisabled"
     }
   ],
   "dynamicHeight": "FIXED",
   "dynamicPropertyPathList": [
     {
       "key": "sourceData"
+    },
+    {
+      "key": "isDisabled"
     }
   ],
   "dynamicTriggerPathList": [],
-  "isDisabled": false,
+  "isDisabled": "{{!homeFunctions.periodo || homeFunctions.periodoSolaLettura }}",
   "isFilterable": true,
   "isLoading": false,
   "isRequired": true,

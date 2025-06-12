@@ -1,9 +1,9 @@
 {
-  "gitSyncId": "6808fda53361a34d8231cac0_3de6aefc-81fa-48ce-bdae-185d9c48dfd3",
-  "id": "Home_homeFunctions",
+  "gitSyncId": "6808fda53361a34d8231cac0_b718d358-258a-43a4-aa7b-e5e01a5acd2e",
+  "id": "Orari_orariFunctions",
   "unpublishedCollection": {
-    "name": "homeFunctions",
-    "pageId": "Home",
+    "name": "orariFunctions",
+    "pageId": "Orari",
     "pluginId": "js-plugin",
     "pluginType": "JS",
     "variables": [
@@ -20,10 +20,6 @@
         "value": "null"
       },
       {
-        "name": "distrettoCambiato",
-        "value": "false"
-      },
-      {
         "name": "secret",
         "value": "\"UxZ>69'[Tu<6\""
       },
@@ -32,28 +28,8 @@
         "value": "{\n  byUnique: {},\n  byId: {}\n}"
       },
       {
-        "name": "periodo",
-        "value": "null"
-      },
-      {
-        "name": "variabiliInserite",
-        "value": "[]"
-      },
-      {
-        "name": "allVariabiliMap",
-        "value": "{}"
-      },
-      {
         "name": "allConvenzionatiMap",
         "value": "{}"
-      },
-      {
-        "name": "filtraPerNomeUtente",
-        "value": "true"
-      },
-      {
-        "name": "periodoSolaLettura",
-        "value": "false"
       }
     ]
   }

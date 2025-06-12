@@ -33,7 +33,7 @@
       "key": "onOptionChange"
     }
   ],
-  "isDisabled": "{{getVariabiliDistretto.isLoading || !homeFunctions.periodo}}",
+  "isDisabled": "{{getVariabiliDistretto.isLoading || !homeFunctions.periodo || homeFunctions.periodoSolaLettura}}",
   "isFilterable": true,
   "isLoading": false,
   "isRequired": false,

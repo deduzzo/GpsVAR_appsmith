@@ -135,6 +135,9 @@
     },
     {
       "key": "primaryColumns.customColumn3.computedValue"
+    },
+    {
+      "key": "primaryColumns.customColumn1.isDisabled"
     }
   ],
   "dynamicPropertyPathList": [
@@ -146,6 +149,9 @@
     },
     {
       "key": "textSize"
+    },
+    {
+      "key": "primaryColumns.customColumn1.isDisabled"
     }
   ],
   "dynamicTriggerPathList": [
@@ -270,7 +276,7 @@
       "isCellEditable": false,
       "isCellVisible": true,
       "isDerived": true,
-      "isDisabled": false,
+      "isDisabled": "{{(() => { const tableData = tabellaVariabili.processedTableData || []; return tableData.length > 0 ? tableData.map((currentRow, currentIndex) => (homeFunctions.periodoSolaLettura)) : homeFunctions.periodoSolaLettura })()}}",
       "isDiscardVisible": true,
       "isEditable": false,
       "isSaveVisible": true,

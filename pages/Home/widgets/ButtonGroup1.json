@@ -129,7 +129,7 @@
       "index": 2,
       "isDisabled": false,
       "isVisible": true,
-      "label": "Periodo: {{homeFunctions.periodo ? (homeFunctions.getMeseItaliano(homeFunctions.periodo.mese) + \" \" + homeFunctions.periodo.anno + \" - Chiusura portale: \" + moment(homeFunctions.periodo.data_fine).format(\"DD/MM/YYYY\") ) : \"Nessun Periodo di inserimento variabili attivo\"}}",
+      "label": "Periodo: {{homeFunctions.periodo ? (homeFunctions.getMeseItaliano(homeFunctions.periodo.mese) + \" \" + homeFunctions.periodo.anno + (!homeFunctions.periodoSolaLettura ? \" - Chiusura portale: \"  : \" - Portale chiuso il \") + moment(homeFunctions.periodo.data_fine).format(\"DD/MM/YYYY\") ) : \"Nessun Periodo di inserimento variabili attivo\"}}",
       "menuItems": {
         "menuItem1": {
           "backgroundColor": "#FFFFFF",

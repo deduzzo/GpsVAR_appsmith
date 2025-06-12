@@ -38,6 +38,10 @@
     {
       "id": "Home",
       "isDefault": false
+    },
+    {
+      "id": "Orari",
+      "isDefault": false
     }
   ],
   "unpublishedApplicationDetail": {

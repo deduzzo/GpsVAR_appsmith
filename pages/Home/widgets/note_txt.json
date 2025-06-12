@@ -15,13 +15,21 @@
     },
     {
       "key": "label"
+    },
+    {
+      "key": "isDisabled"
     }
   ],
   "dynamicHeight": "FIXED",
+  "dynamicPropertyPathList": [
+    {
+      "key": "isDisabled"
+    }
+  ],
   "dynamicTriggerPathList": [],
   "iconAlign": "left",
   "inputType": "TEXT",
-  "isDisabled": false,
+  "isDisabled": "{{!variabileSelezionata.selectedOptionValue || !convenzionatoSelezionato.selectedOptionValue || !homeFunctions.periodo || homeFunctions.periodoSolaLettura}}",
   "isLoading": false,
   "isRequired": false,
   "isVisible": true,
