@@ -248,7 +248,7 @@ export default {
 				month: parseInt(periodoSplitted[1]) -1,
 				day: 1
 			}).endOf('month').format("DD/MM/YYYY");
-			const valoreVariabileRow = this.getValoreCalcolato(riga)['double'];
+			const valoreVariabileRow = this.getValoreCalcolato(riga)['double'].toString().replace(".",",");
 			out.push({
 				"INPUT": "LVARIDE",
 				"RIFERIMENTO": riferimentoVariabile,

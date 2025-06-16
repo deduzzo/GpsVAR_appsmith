@@ -2,68 +2,62 @@
   "accentColor": "{{appsmith.theme.colors.primaryColor}}",
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 9,
+  "bottomRow": 112,
   "boxShadow": "none",
-  "defaultOptionValue": "null",
+  "defaultOptionValue": "{{\n            {\n              label: Select1.options[0].label,\n              value: Select1.options[0].value\n            }\n          }}",
   "dynamicBindingPathList": [
     {
       "key": "sourceData"
+    },
+    {
+      "key": "defaultOptionValue"
     },
     {
       "key": "accentColor"
     },
     {
       "key": "borderRadius"
-    },
-    {
-      "key": "isDisabled"
     }
   ],
   "dynamicHeight": "FIXED",
   "dynamicPropertyPathList": [
     {
       "key": "sourceData"
-    },
-    {
-      "key": "isDisabled"
     }
   ],
-  "dynamicTriggerPathList": [],
-  "isDisabled": "{{ getAllConvenzionati.isLoading || !homeFunctions.periodo}}",
+  "isDisabled": false,
   "isFilterable": true,
   "isLoading": false,
   "isRequired": false,
   "isVisible": true,
-  "key": "5okc8199n1",
+  "key": "7xc1plq12n",
   "labelAlignment": "left",
   "labelPosition": "Top",
-  "labelText": "Convenzionato",
+  "labelText": "Label",
   "labelTextSize": "0.875rem",
   "labelWidth": 5,
-  "leftColumn": 4,
+  "leftColumn": 12,
   "maxDynamicHeight": 9000,
   "minDynamicHeight": 4,
   "minWidth": 450,
-  "mobileBottomRow": 8,
+  "mobileBottomRow": 107,
   "mobileLeftColumn": 0,
   "mobileRightColumn": 20,
-  "mobileTopRow": 1,
+  "mobileTopRow": 100,
   "needsErrorInfo": false,
   "optionLabel": "label",
   "optionValue": "value",
-  "originalBottomRow": 17,
-  "originalTopRow": 10,
   "parentId": "0",
   "parentRowSpace": 10,
-  "placeholderText": "Seleziona il convenzionato...",
+  "placeholderText": "Select option",
   "renderMode": "CANVAS",
   "responsiveBehavior": "fill",
-  "rightColumn": 28,
+  "rightColumn": 32,
   "serverSideFiltering": false,
-  "sourceData": "{{orariFunctions.getAllConvenzionatiConBranca()}}",
-  "topRow": 2,
+  "sourceData": "{{getAllBranche.data.map( (obj) =>{ return  {'label': obj.BRANCA, 'value': obj.BRANCA } })}}",
+  "topRow": 105,
   "type": "SELECT_WIDGET",
   "version": 1,
-  "widgetId": "gj31j0a7i0",
-  "widgetName": "convenzionatoSelezionato"
+  "widgetId": "xkatcjfz1g",
+  "widgetName": "Select1"
 }

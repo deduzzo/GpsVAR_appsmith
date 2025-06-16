@@ -104,8 +104,6 @@ export default {
 		}, {});
 	},
 
-
-
 	getDistrettiPossibiliMap() {
 		return Object.entries(this.getDistrettiFromIds(this.userData.distrettoRaw)).map(
 			([cod, desc]) => ({
@@ -160,6 +158,43 @@ export default {
 
 	createToken: user => jsonwebtoken.sign(user, this.secret, { expiresIn: 60 * 60 }),
 
+	/* =======================
+	   CONVENZIONATI ORARI
+	======================= */
+	aggiungiNuovoConvenzionatoBranca: () => {
+		aggiungiConvBranca_btn.setDisabled(true);
+		showModal(caricamentoMdl.name);
+		aggiungiConvenzionatoBranca.run().then(() => {
+			showAlert("Convenzionato inserito correttamente", "info");
+			convenzionato_cmb.setSelectedOption("");
+			branca_cmb.setSelectedOption("");
+			getAllConvenzionatiBranche.run().then(() => {
+				closeModal(caricamentoMdl.name);
+			});
+		}).catch((err) => {
+			closeModal(caricamentoMdl.name);
+			convenzionato_cmb.setSelectedOption("");
+			branca_cmb.setSelectedOption("")
+			showAlert("Errore nell'inserimento:" + JSON.stringify(err), "error");
+		})
+	},
+	getAllConvenzionatiConBranca: () => {
+		let data = getAllConvenzionatiBranche.data;
+		let out = [];
+		for (let riga of data) {
+			out.push({
+				label: this.allConvenzionatiMap[riga["id_convenzionato"]].COGNOME + " " +
+				this.allConvenzionatiMap[riga["id_convenzionato"]].NOME + " [" + riga["branca"] + "]",
+				value: riga["id_convenzionato"]
+			})
+		}
+		return out;
+	},
+	mostraFormNuovoConvenzionato: () => {
+		convenzionato_cmb.setSelectedOption("");
+		branca_cmb.setSelectedOption("");
+		showModal(nuovoConvBrancaMdl.name);
+	}
 
 
 

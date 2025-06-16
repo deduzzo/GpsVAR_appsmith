@@ -2,7 +2,7 @@
   "accentColor": "{{appsmith.theme.colors.primaryColor}}",
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 9,
+  "bottomRow": 12,
   "boxShadow": "none",
   "defaultOptionValue": "null",
   "dynamicBindingPathList": [
@@ -14,22 +14,16 @@
     },
     {
       "key": "borderRadius"
-    },
-    {
-      "key": "isDisabled"
     }
   ],
   "dynamicHeight": "FIXED",
   "dynamicPropertyPathList": [
     {
       "key": "sourceData"
-    },
-    {
-      "key": "isDisabled"
     }
   ],
   "dynamicTriggerPathList": [],
-  "isDisabled": "{{ getAllConvenzionati.isLoading || !homeFunctions.periodo}}",
+  "isDisabled": false,
   "isFilterable": true,
   "isLoading": false,
   "isRequired": false,
@@ -40,7 +34,7 @@
   "labelText": "Convenzionato",
   "labelTextSize": "0.875rem",
   "labelWidth": 5,
-  "leftColumn": 4,
+  "leftColumn": 1,
   "maxDynamicHeight": 9000,
   "minDynamicHeight": 4,
   "minWidth": 450,
@@ -53,17 +47,17 @@
   "optionValue": "value",
   "originalBottomRow": 17,
   "originalTopRow": 10,
-  "parentId": "0",
+  "parentId": "qzqxura952",
   "parentRowSpace": 10,
   "placeholderText": "Seleziona il convenzionato...",
   "renderMode": "CANVAS",
   "responsiveBehavior": "fill",
-  "rightColumn": 28,
+  "rightColumn": 63,
   "serverSideFiltering": false,
-  "sourceData": "{{orariFunctions.getAllConvenzionatiConBranca()}}",
-  "topRow": 2,
+  "sourceData": "{{getAllConvenzionati.data.map( (obj) =>{ return  {'label': orariFunctions.getConvenzionatoDescFromId(obj.CI), 'value': obj.CI } })}}",
+  "topRow": 5,
   "type": "SELECT_WIDGET",
   "version": 1,
-  "widgetId": "gj31j0a7i0",
-  "widgetName": "convenzionatoSelezionato"
+  "widgetId": "63pem9d9jq",
+  "widgetName": "convenzionato_cmb"
 }
