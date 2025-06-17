@@ -30,6 +30,10 @@
       {
         "name": "allConvenzionatiMap",
         "value": "{}"
+      },
+      {
+        "name": "allPresidiMap",
+        "value": "{}"
       }
     ]
   }

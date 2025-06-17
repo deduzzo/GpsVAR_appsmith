@@ -2,7 +2,7 @@
   "accentColor": "{{appsmith.theme.colors.primaryColor}}",
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 9,
+  "bottomRow": 8,
   "boxShadow": "none",
   "defaultOptionValue": "null",
   "dynamicBindingPathList": [
@@ -28,8 +28,12 @@
       "key": "isDisabled"
     }
   ],
-  "dynamicTriggerPathList": [],
-  "isDisabled": "{{ getAllConvenzionati.isLoading || !homeFunctions.periodo}}",
+  "dynamicTriggerPathList": [
+    {
+      "key": "onOptionChange"
+    }
+  ],
+  "isDisabled": "{{ getAllConvenzionati.isLoading }}",
   "isFilterable": true,
   "isLoading": false,
   "isRequired": false,
@@ -49,6 +53,7 @@
   "mobileRightColumn": 20,
   "mobileTopRow": 1,
   "needsErrorInfo": false,
+  "onOptionChange": "{{orariFunctions.getOrarioConvenzionatoSelezionato();}}",
   "optionLabel": "label",
   "optionValue": "value",
   "originalBottomRow": 17,
@@ -61,7 +66,7 @@
   "rightColumn": 28,
   "serverSideFiltering": false,
   "sourceData": "{{orariFunctions.getAllConvenzionatiConBranca()}}",
-  "topRow": 2,
+  "topRow": 0,
   "type": "SELECT_WIDGET",
   "version": 1,
   "widgetId": "gj31j0a7i0",
