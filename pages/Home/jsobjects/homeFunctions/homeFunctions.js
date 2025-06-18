@@ -264,7 +264,7 @@ export default {
 				"RIFERIMENTO": riferimentoVariabile,
 				"CI": riga["id_conv"],
 				"ANNO": riferimentoStipendio.year(),
-				"MESE": parseInt(riferimentoStipendio.month()),
+				"MESE": parseInt(riferimentoStipendio.month()) +1,
 				"MENSILITA": mensilita[riferimentoStipendio.month()],
 				"VOCE": voceSplitted[0].replace("#",""),
 				"SUB": voceSplitted[1],
