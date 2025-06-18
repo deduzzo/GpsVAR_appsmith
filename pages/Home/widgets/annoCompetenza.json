@@ -32,7 +32,7 @@
     }
   ],
   "dynamicTriggerPathList": [],
-  "isDisabled": "{{!homeFunctions.periodo || homeFunctions.periodoSolaLettura }}",
+  "isDisabled": "{{!homeFunctions.forzaAbilitazionePeriodo  && (!homeFunctions.periodo || homeFunctions.periodoSolaLettura) }}",
   "isFilterable": true,
   "isLoading": false,
   "isRequired": true,

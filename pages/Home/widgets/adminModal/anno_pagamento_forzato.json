@@ -1,11 +1,10 @@
 {
   "accentColor": "{{appsmith.theme.colors.primaryColor}}",
-  "allowSelectAll": true,
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 23,
+  "bottomRow": 15,
   "boxShadow": "none",
-  "defaultOptionValue": "{{ ((options, serverSideFiltering) => (  Object.values(homeFunctions.getDistrettiPossibiliMap())))(distrettiSelezionatiReportCsv.options, distrettiSelezionatiReportCsv.serverSideFiltering) }}",
+  "defaultOptionValue": "{{ ((options, serverSideFiltering) => ( homeFunctions.periodo.anno))(anno_pagamento_forzato.options, anno_pagamento_forzato.serverSideFiltering) }}",
   "dynamicBindingPathList": [
     {
       "key": "accentColor"
@@ -18,52 +17,55 @@
     },
     {
       "key": "defaultOptionValue"
+    },
+    {
+      "key": "isDisabled"
     }
   ],
-  "dynamicHeight": "AUTO_HEIGHT",
+  "dynamicHeight": "FIXED",
   "dynamicPropertyPathList": [
     {
       "key": "sourceData"
+    },
+    {
+      "key": "isDisabled"
     }
   ],
   "dynamicTriggerPathList": [],
-  "isDisabled": false,
+  "isDisabled": "{{homeFunctions.userData.livello < 3 || !forza_override_periodo.isSwitchedOn}}",
   "isFilterable": true,
   "isLoading": false,
   "isRequired": true,
   "isVisible": true,
-  "key": "le3evun2cl",
+  "key": "caj75zdhcb",
   "labelAlignment": "left",
   "labelPosition": "Top",
-  "labelText": "Distretti",
+  "labelText": "Anno comp.",
   "labelTextSize": "0.875rem",
   "labelWidth": 5,
-  "leftColumn": 1,
+  "leftColumn": 17,
   "maxDynamicHeight": 9000,
   "minDynamicHeight": 4,
   "minWidth": 450,
-  "mobileBottomRow": 12,
-  "mobileLeftColumn": 1,
-  "mobileRightColumn": 21,
-  "mobileTopRow": 5,
+  "mobileBottomRow": 24,
+  "mobileLeftColumn": 0,
+  "mobileRightColumn": 20,
+  "mobileTopRow": 17,
   "needsErrorInfo": false,
-  "optionLabel": "label",
+  "optionLabel": "anno",
   "optionValue": "value",
-  "originalBottomRow": 23,
-  "originalTopRow": 16,
-  "parentColumnSpace": 6.9375,
+  "parentColumnSpace": 20.25,
   "parentId": "lt4iylkmzz",
   "parentRowSpace": 10,
-  "placeholderText": "seleziona distretti",
+  "placeholderText": "Select option",
   "renderMode": "CANVAS",
   "responsiveBehavior": "fill",
-  "rightColumn": 63,
+  "rightColumn": 27,
   "serverSideFiltering": false,
-  "shouldScrollContents": true,
-  "sourceData": "{{homeFunctions.getDistrettiPossibiliMap()}}",
-  "topRow": 16,
-  "type": "MULTI_SELECT_WIDGET_V2",
+  "sourceData": "{{ homeFunctions.getLast10YearsMap()}}",
+  "topRow": 8,
+  "type": "SELECT_WIDGET",
   "version": 1,
-  "widgetId": "6spz6zqlt0",
-  "widgetName": "distrettiSelezionatiReportCsv"
+  "widgetId": "d6nddyi4by",
+  "widgetName": "anno_pagamento_forzato"
 }

@@ -19,6 +19,8 @@ export default {
 	allConvenzionatiMap: {},
 	filtraPerNomeUtente: true,
 	periodoSolaLettura:false,
+	forzaAbilitazionePeriodo: false,
+	rowToRemove: null,
 
 	/* =======================
 	   LOAD INIZIALE
@@ -27,6 +29,12 @@ export default {
 		showModal(caricamentoMdl.name);
 		this.firstLoadingOk = false;
 		try {
+			convenzionatoSelezionato.setSelectedOption("");
+			variabileSelezionata.setSelectedOption("");
+			importoVariabile.setValue("");
+			altriDati.setValue("");
+			note_txt.setValue("");
+			this.rowToRemove = null;
 			await this.getDistrettiMap();          // 1
 			await this.verifyTokenExpires();       // 2
 			await this.getPeriodo();               // 3
@@ -126,15 +134,17 @@ export default {
 
 	async getPeriodo() {
 		// se serve aggiornare il dataset, decommenta:
-		await getPeriodo.run();
-		const periodo = getPeriodo.data;
-		if (periodo.length === 1)
-			this.periodo =  periodo[0];
-		else {
-			const periodoVis = getLastPeriodoVisualizzazione.data;
-			if (periodoVis.length === 1) {
-				this.periodo = periodoVis[0];
-				this.periodoSolaLettura = true;
+		if (!this.forzaAbilitazionePeriodo) {
+			await getPeriodo.run();
+			const periodo = getPeriodo.data;
+			if (periodo.length === 1)
+				this.periodo =  periodo[0];
+			else {
+				const periodoVis = getLastPeriodoVisualizzazione.data;
+				if (periodoVis.length === 1) {
+					this.periodo = periodoVis[0];
+					this.periodoSolaLettura = true;
+				}
 			}
 		}
 	},
@@ -508,11 +518,23 @@ export default {
 	/* =======================
 	   CRUD VARIABILI
 	======================= */
-	async removeRow(row) {
-		await deleteFromRowIndex.run({ rowIndex: row.rowIndex });
+
+	doSoftRemove : async () => {
+	if (this.rowToRemove) {
+		await deleteFromRowIndex.run();
 		await getDatiVarDistrettoPeriodo.run();
+		closeModal(modal_conferma_rimozione.name);
 		showAlert("Riga eliminata, elenco aggiornato.", "info");
+			this.rowToRemove = null;
+		}
+		else 
+			showAlert("Errore nell'eliminazione della riga", "error");
+},
+	async removeRow(row) {
+		this.rowToRemove = row;
+		showModal(modal_conferma_rimozione.name);
 	},
+
 
 	async aggiungiVariabile() {
 		if (
@@ -554,5 +576,28 @@ export default {
 
 		statusTxt.setText("");
 		showAlert("Variabile inserita correttamente", "info");
+	},
+	impostaPeriodoAdmin : () => {
+		if (forza_override_periodo.isSwitchedOn) {
+			imposta_periodo_btn.setDisabled(true);
+			getPeriodoFromAnnoMese.run().then(() => {
+				if (getPeriodoFromAnnoMese.data.length=== 1) {
+					this.periodo = getPeriodoFromAnnoMese.data[0];
+					this.forzaAbilitazionePeriodo = abilita_inserimento_chk.isChecked;
+					imposta_periodo_btn.setDisabled(false);
+					this.initLoad();
+					showAlert("Nuovo periodo selezionato, aggiornamento portale in corso", "info")
+				}
+				else {
+					showAlert("Nessun periodo esistente con l'anno e il mese selezionato", "error");
+					imposta_periodo_btn.setDisabled(false);
+				}
+			})
+		}
+		else {
+			this.forzaAbilitazionePeriodo = false;
+			imposta_periodo_btn.setDisabled(false);
+			this.initLoad();
+		}
 	}
 };

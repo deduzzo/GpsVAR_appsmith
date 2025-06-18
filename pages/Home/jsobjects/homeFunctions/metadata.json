@@ -54,6 +54,14 @@
       {
         "name": "periodoSolaLettura",
         "value": "false"
+      },
+      {
+        "name": "forzaAbilitazionePeriodo",
+        "value": "false"
+      },
+      {
+        "name": "rowToRemove",
+        "value": "null"
       }
     ]
   }

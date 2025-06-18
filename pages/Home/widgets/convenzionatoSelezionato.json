@@ -29,7 +29,7 @@
     }
   ],
   "dynamicTriggerPathList": [],
-  "isDisabled": "{{ getAllConvenzionati.isLoading || !homeFunctions.periodo || homeFunctions.periodoSolaLettura}}",
+  "isDisabled": "{{ getAllConvenzionati.isLoading || (!homeFunctions.forzaAbilitazionePeriodo  && ( !homeFunctions.periodo || homeFunctions.periodoSolaLettura))}}",
   "isFilterable": true,
   "isLoading": false,
   "isRequired": false,

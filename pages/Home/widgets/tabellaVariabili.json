@@ -46,10 +46,10 @@
     "valido",
     "distretto",
     "rowIndex",
-    "rapporto",
-    "customColumn3"
+    "customColumn3",
+    "data_annullamento"
   ],
-  "columnUpdatedAt": 1749631302225,
+  "columnUpdatedAt": 1750253706870,
   "columnWidthMap": {
     "competenza": 138,
     "customColumn1": 60,
@@ -131,13 +131,13 @@
       "key": "primaryColumns.note.computedValue"
     },
     {
-      "key": "primaryColumns.rapporto.computedValue"
-    },
-    {
       "key": "primaryColumns.customColumn3.computedValue"
     },
     {
       "key": "primaryColumns.customColumn1.isDisabled"
+    },
+    {
+      "key": "primaryColumns.data_annullamento.computedValue"
     }
   ],
   "dynamicPropertyPathList": [
@@ -276,7 +276,7 @@
       "isCellEditable": false,
       "isCellVisible": true,
       "isDerived": true,
-      "isDisabled": "{{(() => { const tableData = tabellaVariabili.processedTableData || []; return tableData.length > 0 ? tableData.map((currentRow, currentIndex) => (homeFunctions.periodoSolaLettura)) : homeFunctions.periodoSolaLettura })()}}",
+      "isDisabled": "{{(() => { const tableData = tabellaVariabili.processedTableData || []; return tableData.length > 0 ? tableData.map((currentRow, currentIndex) => (homeFunctions.periodoSolaLettura && !homeFunctions.forzaAbilitazionePeriodo)) : homeFunctions.periodoSolaLettura && !homeFunctions.forzaAbilitazionePeriodo })()}}",
       "isDiscardVisible": true,
       "isEditable": false,
       "isSaveVisible": true,
@@ -352,6 +352,37 @@
       "labelColor": "#FFFFFF",
       "notation": "standard",
       "originalId": "customColumn3",
+      "sticky": "",
+      "textSize": "0.8rem",
+      "thousandSeparator": true,
+      "validation": {},
+      "verticalAlignment": "CENTER",
+      "width": 150
+    },
+    "data_annullamento": {
+      "alias": "data_annullamento",
+      "allowCellWrapping": false,
+      "allowSameOptionsInNewRow": true,
+      "columnType": "text",
+      "computedValue": "{{tabellaVariabili.processedTableData.map((currentRow, currentIndex) => ( currentRow[\"data_annullamento\"]))}}",
+      "currencyCode": "USD",
+      "decimals": 0,
+      "enableFilter": true,
+      "enableSort": true,
+      "horizontalAlignment": "CENTER",
+      "id": "data_annullamento",
+      "index": 10,
+      "isCellEditable": false,
+      "isCellVisible": true,
+      "isDerived": false,
+      "isDisabled": false,
+      "isDiscardVisible": true,
+      "isEditable": false,
+      "isSaveVisible": true,
+      "isVisible": true,
+      "label": "data_annullamento",
+      "notation": "standard",
+      "originalId": "data_annullamento",
       "sticky": "",
       "textSize": "0.8rem",
       "thousandSeparator": true,
@@ -519,40 +550,6 @@
       "label": "periodo",
       "notation": "standard",
       "originalId": "periodo",
-      "sticky": "",
-      "textColor": "",
-      "textSize": "0.8rem",
-      "thousandSeparator": true,
-      "validation": {},
-      "verticalAlignment": "CENTER",
-      "width": 150
-    },
-    "rapporto": {
-      "alias": "rapporto",
-      "allowCellWrapping": false,
-      "allowSameOptionsInNewRow": true,
-      "cellBackground": "",
-      "columnType": "text",
-      "computedValue": "{{tabellaVariabili.processedTableData.map((currentRow, currentIndex) => ( currentRow[\"rapporto\"]))}}",
-      "currencyCode": "USD",
-      "decimals": 0,
-      "enableFilter": true,
-      "enableSort": true,
-      "fontStyle": "",
-      "horizontalAlignment": "CENTER",
-      "id": "rapporto",
-      "index": 12,
-      "isCellEditable": false,
-      "isCellVisible": true,
-      "isDerived": false,
-      "isDisabled": false,
-      "isDiscardVisible": true,
-      "isEditable": false,
-      "isSaveVisible": true,
-      "isVisible": true,
-      "label": "rapporto",
-      "notation": "standard",
-      "originalId": "rapporto",
       "sticky": "",
       "textColor": "",
       "textSize": "0.8rem",

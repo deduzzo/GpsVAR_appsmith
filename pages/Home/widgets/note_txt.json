@@ -29,7 +29,7 @@
   "dynamicTriggerPathList": [],
   "iconAlign": "left",
   "inputType": "TEXT",
-  "isDisabled": "{{!variabileSelezionata.selectedOptionValue || !convenzionatoSelezionato.selectedOptionValue || !homeFunctions.periodo || homeFunctions.periodoSolaLettura}}",
+  "isDisabled": "{{!variabileSelezionata.selectedOptionValue || !convenzionatoSelezionato.selectedOptionValue || (!homeFunctions.forzaAbilitazionePeriodo  && (!homeFunctions.periodo || homeFunctions.periodoSolaLettura))}}",
   "isLoading": false,
   "isRequired": false,
   "isVisible": true,
