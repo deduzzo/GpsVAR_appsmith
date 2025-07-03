@@ -603,11 +603,12 @@ export default {
 	caricaInfoConv : () => {
 				storeValue("infoConvSelezionato", "");
 					icon_info_conv.setVisibility(false);
-		getInfoConvByCf.run({cf:this.allConvenzionatiMap[convenzionatoSelezionato.selectedOptionValue].CODICE_FISCALE }).then((res) => {
+		if (convenzionatoSelezionato.selectedOptionValue) { getInfoConvByCf.run({cf:this.allConvenzionatiMap[convenzionatoSelezionato.selectedOptionValue].CODICE_FISCALE }).then((res) => {
 			if (getInfoConvByCf.data.length === 1) {
 				icon_info_conv.setVisibility(true);
 				storeValue("infoConvSelezionato","Indirizzo residenza da sistema TS:<br /><b> " + getInfoConvByCf.data[0].indirizzoResidenza + "</b>");
 			}
-		})
+			});
+		}
 	}
 };
