@@ -26,9 +26,16 @@
     },
     {
       "key": "isDisabled"
+    },
+    {
+      "key": "onOptionChange"
     }
   ],
-  "dynamicTriggerPathList": [],
+  "dynamicTriggerPathList": [
+    {
+      "key": "onOptionChange"
+    }
+  ],
   "isDisabled": "{{ getAllConvenzionati.isLoading || (!homeFunctions.forzaAbilitazionePeriodo  && ( !homeFunctions.periodo || homeFunctions.periodoSolaLettura))}}",
   "isFilterable": true,
   "isLoading": false,
@@ -49,6 +56,7 @@
   "mobileRightColumn": 20,
   "mobileTopRow": 1,
   "needsErrorInfo": false,
+  "onOptionChange": "{{homeFunctions.caricaInfoConv()}}",
   "optionLabel": "label",
   "optionValue": "value",
   "originalBottomRow": 17,
