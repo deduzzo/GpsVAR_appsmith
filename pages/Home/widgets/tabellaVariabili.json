@@ -47,9 +47,10 @@
     "distretto",
     "rowIndex",
     "customColumn3",
-    "data_annullamento"
+    "data_annullamento",
+    "rapporto"
   ],
-  "columnUpdatedAt": 1750253706870,
+  "columnUpdatedAt": 1751527611934,
   "columnWidthMap": {
     "competenza": 138,
     "customColumn1": 60,
@@ -138,6 +139,9 @@
     },
     {
       "key": "primaryColumns.data_annullamento.computedValue"
+    },
+    {
+      "key": "primaryColumns.rapporto.computedValue"
     }
   ],
   "dynamicPropertyPathList": [
@@ -552,6 +556,37 @@
       "originalId": "periodo",
       "sticky": "",
       "textColor": "",
+      "textSize": "0.8rem",
+      "thousandSeparator": true,
+      "validation": {},
+      "verticalAlignment": "CENTER",
+      "width": 150
+    },
+    "rapporto": {
+      "alias": "rapporto",
+      "allowCellWrapping": false,
+      "allowSameOptionsInNewRow": true,
+      "columnType": "text",
+      "computedValue": "{{tabellaVariabili.processedTableData.map((currentRow, currentIndex) => ( currentRow[\"rapporto\"]))}}",
+      "currencyCode": "USD",
+      "decimals": 0,
+      "enableFilter": true,
+      "enableSort": true,
+      "horizontalAlignment": "CENTER",
+      "id": "rapporto",
+      "index": 13,
+      "isCellEditable": false,
+      "isCellVisible": true,
+      "isDerived": false,
+      "isDisabled": false,
+      "isDiscardVisible": true,
+      "isEditable": false,
+      "isSaveVisible": true,
+      "isVisible": true,
+      "label": "rapporto",
+      "notation": "standard",
+      "originalId": "rapporto",
+      "sticky": "",
       "textSize": "0.8rem",
       "thousandSeparator": true,
       "validation": {},

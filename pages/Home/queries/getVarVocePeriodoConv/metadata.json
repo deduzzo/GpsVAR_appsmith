@@ -92,6 +92,11 @@
                 "condition": "EQ",
                 "key": "competenza",
                 "value": "{{ annoCompetenza.selectedOptionValue.toString()+ \"_\" + meseCompetenza.selectedOptionValue.toString() }}"
+              },
+              {
+                "condition": "EQ",
+                "key": "valido",
+                "value": "SI"
               }
             ],
             "condition": "AND"
@@ -119,6 +124,9 @@
       },
       {
         "key": "formData.where.data.children[2].value"
+      },
+      {
+        "key": "formData.where.data.children[3].value"
       }
     ],
     "name": "getVarVocePeriodoConv",
