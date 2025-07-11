@@ -253,9 +253,10 @@ export default {
 		for (let riga of allData) {
 			const voceSplitted = riga["voce"].split("$");
 			const periodoSplitted = riga["periodo"].split("_");
+			const competenzaSplitted = riga["competenza"].split("_");
 			const riferimentoVariabile = moment({
-				year: parseInt(periodoSplitted[0]),
-				month: parseInt(periodoSplitted[1]) -1,
+				year: parseInt(competenzaSplitted[0]),
+				month: parseInt(competenzaSplitted[1]) -1,
 				day: 1
 			}).endOf('month').format("DD/MM/YYYY");
 			const valoreVariabileRow = this.getValoreCalcolato(riga)['double'].toString().replace(".",",");
