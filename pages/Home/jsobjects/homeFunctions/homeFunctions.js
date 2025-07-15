@@ -269,7 +269,7 @@ export default {
 				"MENSILITA": mensilita[riferimentoStipendio.month()],
 				"VOCE": voceSplitted[0].replace("#",""),
 				"SUB": voceSplitted[1],
-				"ARR": "C",
+				"ARR": "",
 				"QTA": this.allVariabiliMap[riga['voce']]['IMPORTO'] === "" ? valoreVariabileRow : "",
 				"IMP": this.allVariabiliMap[riga['voce']]['IMPORTO'] === "SI" ? valoreVariabileRow : "",
 				"SEDE_DEL": "",
