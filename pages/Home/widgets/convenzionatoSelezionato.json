@@ -2,7 +2,7 @@
   "accentColor": "{{appsmith.theme.colors.primaryColor}}",
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 14,
+  "bottomRow": 12,
   "boxShadow": "none",
   "defaultOptionValue": "null",
   "dynamicBindingPathList": [
@@ -69,7 +69,7 @@
   "rightColumn": 52,
   "serverSideFiltering": false,
   "sourceData": "{{getAllConvenzionati.data.map( (obj) =>{ return  {'label': homeFunctions.getConvenzionatoDescFromId(obj.CI), 'value': obj.CI } })}}",
-  "topRow": 7,
+  "topRow": 5,
   "type": "SELECT_WIDGET",
   "version": 1,
   "widgetId": "kwhbdo0g5i",

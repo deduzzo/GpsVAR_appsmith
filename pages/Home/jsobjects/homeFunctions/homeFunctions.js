@@ -37,6 +37,7 @@ export default {
 			this.rowToRemove = null;
 			await this.getDistrettiMap();          // 1
 			await this.verifyTokenExpires();       // 2
+			await this.getCategorieConvenzionatiDaAbilitazioni(); // 2bis
 			await this.getPeriodo();               // 3
 			await this.getVariabiliDistretto();    // 4
 			await this.getConvenzionatiMap();      // 5
@@ -123,6 +124,14 @@ export default {
 			this.allVariabiliMap[v["#"]] = v;
 		});
 	},
+	
+	async getCategorieConvenzionatiDaAbilitazioni () {
+		let categorie = [];
+		await getCategoriaSpecAbilitazioni.run();
+		for (let cat of getCategoriaSpecAbilitazioni.data)
+			categorie.push(cat["categoria_variabile"])
+		this.userData.categorieVariabiliAbilitate = categorie;
+	},
 
 	async getConvenzionatiMap() {
 		this.allConvenzionatiMap = {};
@@ -205,6 +214,7 @@ export default {
 				this.userData = {
 					username: decoded.data.user,
 					livelloText: this.livelli[decoded.data.livello.toString()],
+					abilitazioni: decoded.data.abilitazioni_dipententi.split(','),
 					livello: decoded.data.livello,
 					mail: decoded.data.mail,
 					distrettoRaw: decoded.data.id_distretto,
@@ -496,11 +506,28 @@ export default {
 		/* --------------------------------------------------------
 	   5. Firma
 	   -------------------------------------------------------- */
-		const firmaX = doc.internal.pageSize.width  - 60;
-		const firmaY = doc.internal.pageSize.height - 30;
-		doc.setFontSize(12);
-		doc.text("Il responsabile", firmaX, firmaY);
-		doc.line(firmaX, firmaY + 10, firmaX + 50, firmaY + 10);
+/* --------------------------------------------------------
+   5. Firme
+   -------------------------------------------------------- */
+const pageWidth = doc.internal.pageSize.width;
+const pageHeight = doc.internal.pageSize.height;
+
+// Coordinate verticali
+const firmaY = pageHeight - 30;
+const firmaY2 = firmaY + 18;
+
+// Prima riga: due firme, sinistra e destra
+doc.setFontSize(12);
+doc.text("Responsabile del Procedimento", 20, firmaY);
+doc.text("Dirigente Medico", pageWidth - 80, firmaY);
+
+// Linee per le firme
+doc.line(20, firmaY + 8, 20 + 60, firmaY + 8); // sinistra
+doc.line(pageWidth - 80, firmaY + 8, pageWidth - 20, firmaY + 8); // destra
+
+// Seconda riga: una firma a destra
+doc.text("Direttore del Distretto", pageWidth - 80, firmaY2);
+doc.line(pageWidth - 80, firmaY2 + 8, pageWidth - 20, firmaY2 + 8); // destra, sotto
 
 		/* --------------------------------------------------------
 	   6. Salvataggio / restituzione

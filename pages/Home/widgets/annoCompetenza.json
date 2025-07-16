@@ -2,7 +2,7 @@
   "accentColor": "{{appsmith.theme.colors.primaryColor}}",
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 14,
+  "bottomRow": 12,
   "boxShadow": "none",
   "defaultOptionValue": "{{ ((options, serverSideFiltering) => ( homeFunctions.periodo.anno))(annoCompetenza.options, annoCompetenza.serverSideFiltering) }}",
   "dynamicBindingPathList": [
@@ -63,7 +63,7 @@
   "rightColumn": 22,
   "serverSideFiltering": false,
   "sourceData": "{{ homeFunctions.getLast10YearsMap()}}",
-  "topRow": 7,
+  "topRow": 5,
   "type": "SELECT_WIDGET",
   "version": 1,
   "widgetId": "4it30rgiw7",

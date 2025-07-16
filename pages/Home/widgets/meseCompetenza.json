@@ -2,7 +2,7 @@
   "accentColor": "{{appsmith.theme.colors.primaryColor}}",
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 14,
+  "bottomRow": 12,
   "boxShadow": "none",
   "defaultOptionValue": "{{ ((options, serverSideFiltering) => ( homeFunctions.periodo.mese))(meseCompetenza.options, meseCompetenza.serverSideFiltering) }}",
   "dynamicBindingPathList": [
@@ -63,7 +63,7 @@
   "rightColumn": 16,
   "serverSideFiltering": false,
   "sourceData": "{{ homeFunctions.getMesiMap()}}",
-  "topRow": 7,
+  "topRow": 5,
   "type": "SELECT_WIDGET",
   "version": 1,
   "widgetId": "yn16uhjdye",

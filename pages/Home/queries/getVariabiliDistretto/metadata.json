@@ -98,6 +98,11 @@
                     "condition": "EQ",
                     "key": "ESCLUDI",
                     "value": ""
+                  },
+                  {
+                    "condition": "IN",
+                    "key": "CATEGORIA",
+                    "value": "{{homeFunctions.userData.abilitazioni}}"
                   }
                 ],
                 "condition": "AND"
@@ -122,6 +127,9 @@
     "dynamicBindingPathList": [
       {
         "key": "formData.where.data.children[1].children[0].value"
+      },
+      {
+        "key": "formData.where.data.children[1].children[2].value"
       }
     ],
     "name": "getVariabiliDistretto",

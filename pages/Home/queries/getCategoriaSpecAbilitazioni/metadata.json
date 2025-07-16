@@ -1,6 +1,6 @@
 {
-  "gitSyncId": "6808fda53361a34d8231cac0_5d51a711-4a43-4db7-b5c9-5249b80d0b34",
-  "id": "Home_getAllConvenzionati",
+  "gitSyncId": "6808fda53361a34d8231cac0_7713b6bc-0d21-458a-9275-56814457fa90",
+  "id": "Home_getCategoriaSpecAbilitazioni",
   "pluginId": "google-sheets-plugin",
   "pluginType": "SAAS",
   "unpublishedAction": {
@@ -15,7 +15,7 @@
         },
         "pagination": {
           "data": {
-            "limit": "999999999",
+            "limit": "20",
             "offset": "0"
           }
         },
@@ -29,25 +29,21 @@
           "data": ""
         },
         "sheetName": {
-          "data": "personale_convenzionato"
+          "data": "categorie_variabili"
         },
         "sheetUrl": {
-          "componentData": "",
-          "data": "https://docs.google.com/spreadsheets/d/186jsr4bHqJ60W8_WEg_RJdu14jYVQ6RI8VRNVe80gWg/edit?gid=1741439655#gid=1741439655",
-          "viewType": "json"
+          "data": "https://docs.google.com/spreadsheets/d/186jsr4bHqJ60W8_WEg_RJdu14jYVQ6RI8VRNVe80gWg/edit"
         },
         "smartSubstitution": {
           "data": true
         },
         "sortBy": {
-          "componentData": [
+          "data": [
             {
-              "column": "COGNOME",
+              "column": "",
               "order": "Ascending"
             }
-          ],
-          "data": "[\n\t{\n\t\t\"column\": \"COGNOME\",\n\t\t\"order\": \"Ascending\"\n\t}\n]",
-          "viewType": "json"
+          ]
         },
         "tableHeaderIndex": {
           "data": "1"
@@ -57,8 +53,8 @@
             "children": [
               {
                 "condition": "IN",
-                "key": "RAPPORTO",
-                "value": "{{homeFunctions.userData.categorieVariabiliAbilitate}}"
+                "key": "categoria_matricola",
+                "value": "{{homeFunctions.userData.abilitazioni}}"
               }
             ],
             "condition": "AND"
@@ -80,7 +76,7 @@
         "key": "formData.where.data.children[0].value"
       }
     ],
-    "name": "getAllConvenzionati",
+    "name": "getCategoriaSpecAbilitazioni",
     "pageId": "Home",
     "runBehaviour": "ON_PAGE_LOAD",
     "userSetOnLoad": false
